@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Most Liked Photos of 2017</title>
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body id="body">
+    <header>
+      2017Top4.com
+    </header>
+    <main class="main">
+      <section id="home" class="view" hidden aria-hidden>
+        <h1>Create a collage of your most-liked Instagram photos from 2017</h1>
+        <a id="js-login" class="button" href="#">Find my 2017 Top 4!</a>
+      </section>
+      <section id="loading" class="view" hidden aria-hidden>
+        <div class="loader">
+          <div class="loader-cube1 loader-cube"></div>
+          <div class="loader-cube2 loader-cube"></div>
+          <div class="loader-cube4 loader-cube"></div>
+          <div class="loader-cube3 loader-cube"></div>
+        </div>
+      </section>
+      <section id="pics" class="view" hidden aria-hidden>
+        <a id="js-download--1" class="button" href="#">Download Photo</a>
+        <a id="js-download--2" class="canvas__wrapper" href="#">
+          <canvas id="js-canvas" class="canvas"></canvas>
+        </a>
+        <a id="js-download--3" class="button" href="#">Download Photo</a>
+      </section>
+      <section id="error" class="view" hidden aria-hidden>
+        <p>This is embarrassing, we've encountered an error:</p>
+        <code id="js-error"></code>
+        <p>
+          You can help us out by submitting an issue <a href="https://github.com/brettdewoody/instagram-2017-top-4/issues">on our Github page </a> or creating a Pull Request to address it.
+        </p>
+        <p><a href="/">Return to the homepage</a></p>
+      </section>
+    </main>
+    <footer>
+      <a href="https://github.com/brettdewoody/instagram-2017-top-4">Contribute on Github</a>
+    </footer>
+  <script type="text/javascript" src="app.js"></script>
+  </body>
+</html>
