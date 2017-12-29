@@ -39,6 +39,7 @@ const renderView = (view, callback) => {
 const renderHome = () => document.getElementById("js-login").setAttribute("href", LOGIN_URL);
 
 const renderPics = () => {
+  document.getElementById("js-message").innerHTML = "Hold tight, this could take a minute...";
   fetchMedia(API_ENDPOINT, [])
     .then(response => {
       renderView("pics");
