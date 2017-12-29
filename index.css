@@ -251,7 +251,7 @@ footer {
 .button {
   display: inline-block;
   padding: 10px 25px;
-  font-size: 28px;
+  font-size: 1em;
   color: #ffffff;
   text-decoration: none;
   margin: 20px;
@@ -368,6 +368,10 @@ footer {
 
 @media screen and (min-width: 600px) {
   h1 {
+    font-size: 1.8em;
+  }
+
+  .button {
     font-size: 1.8em;
   }
 }
