@@ -12,6 +12,7 @@ const API_ENDPOINT = `${API_BASE}v1/users/self/media/recent/?access_token=${HASH
 // Set the initial view and render the app
 window.onload = () => {
   if (HASH[0] === "access_token") {
+    history.replaceState("", document.title, DOMAIN);
     return renderView("loading", renderPics);
   }
 
