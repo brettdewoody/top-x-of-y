@@ -145,8 +145,10 @@ body {
 }
 
 body {
+  display: -webkit-flex;
   display: flex;
   align-items: center;
+  -webkit-flex-direction: column;
   flex-direction: column;
   font-size: 16px;
   text-align: center;
@@ -208,6 +210,7 @@ footer {
   width: 100%;
   max-width: 600px;
   margin-top: 70px;
+  -webkit-flex: 1;
   flex: 1;
 }
 
@@ -219,6 +222,7 @@ footer {
 }
 
 .view.active {
+  display: -webkit-flex;
   display: flex;
 }
 
