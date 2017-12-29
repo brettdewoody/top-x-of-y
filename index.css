@@ -267,9 +267,7 @@ footer {
 /  Adapted from http://tobiasahlin.com/spinkit/
 */
 .loader {
-  position: absolute;
-  top: 35%;
-  margin: 20px auto;
+  margin-top: 30%;
   width: 40px;
   height: 40px;
 }
