@@ -119,7 +119,7 @@ const createCollage = media => {
     addMedia(context, item.images.standard_resolution.url, positions[i], 400);
   });
 
-  addText(context, `My 2017 Top 4 Photos - ${numLikes} Likes`, [
+  addText(context, `My 2017 Top 4 Photos - ${numLikes.toLocaleString()} Likes`, [
     30,
     canvas.height - 20
   ]);
