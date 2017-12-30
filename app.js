@@ -98,7 +98,7 @@ const addMedia = (ctx, url, pos, w) => {
 const getMediaYear = date => new Date(date * 1000).getFullYear();
 
 const addText = (ctx, text, pos) => {
-  ctx.textAlign = "center";
+  ctx.textAlign = "left";
   ctx.font = "36px -apple-system, system-ui, Arial";
   ctx.fillStyle = "#222222";
   ctx.fillText(text, pos[0], pos[1]);
@@ -120,7 +120,7 @@ const createCollage = media => {
   });
 
   addText(context, `My 2017 Top 4 Photos - ${numLikes} Likes`, [
-    canvas.width / 2,
+    30,
     canvas.height - 20
   ]);
 };
