@@ -4,7 +4,299 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My Most Liked Photos of 2017</title>
-    <link rel="stylesheet" href="index.css">
+    <style media="screen">
+    /* http://meyerweb.com/eric/tools/css/reset/
+       v2.0 | 20110126
+       License: none (public domain)
+    */
+    html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+    }
+
+    /* HTML5 display-role reset for older browsers */
+
+    article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+      display: block;
+    }
+
+    body {
+      line-height: 1;
+    }
+
+    ol, ul {
+      list-style: none;
+    }
+
+    blockquote, q {
+      quotes: none;
+    }
+
+    blockquote:before, blockquote:after, q:before, q:after {
+      content: "";
+      content: none;
+    }
+
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    /*
+    /  Global
+    */
+
+    html {
+      font-size: 16px;
+    }
+
+    html, body {
+      padding: 0;
+      margin: 0;
+      font-family: -apple-system, system-ui, Arial;
+      height: 100%;
+      min-height: 100vh;
+    }
+
+    body {
+      display: -webkit-flex;
+      display: flex;
+      align-items: center;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1.4em;
+      line-height: 1.2em;
+      margin-bottom: 1em;
+    }
+
+    p {
+      padding-bottom: 1.8em;
+      line-height: 1.4em;
+    }
+
+    a {
+      text-decoration: none;
+      color: #3897f0;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    code {
+      font-family: monospace;
+      padding-bottom: 1.8em;
+      color: #2c2c2c;
+    }
+
+    /*
+    / Layout
+    */
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      left: 0;
+      height: 45px;
+      line-height: 45px;
+      background-color: #ffffff;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.098);
+      z-index: 10;
+    }
+
+    footer {
+      margin-top: 80px;
+      height: 45px;
+      width: 100%;
+      line-height: 45px;
+      background-color: #ffffff;
+      border-top: 1px solid rgba(0, 0, 0, 0.098);
+      z-index: 10;
+    }
+
+    .main {
+      width: 100%;
+      max-width: 600px;
+      margin-top: 70px;
+      -webkit-flex: 1;
+      flex: 1;
+    }
+
+    .view {
+      display: none;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    .view.active {
+      display: -webkit-flex;
+      display: flex;
+    }
+
+    /*
+    /  Canvas
+    */
+
+    .canvas__wrapper {
+      height: 10px;
+      width: 100%;
+      position: relative;
+      padding-bottom: 110%;
+    }
+
+    .canvas {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      max-width: 600px;
+      pointer-events: none;
+    }
+
+    /*
+    /  Button
+    */
+
+    .button {
+      display: inline-block;
+      padding: 10px 25px;
+      font-size: 1em;
+      color: #ffffff;
+      text-decoration: none;
+      margin: 20px;
+      background-color: #3897f0;
+      border-radius: 3px;
+      transition: background-color 0.1s ease-out;
+    }
+
+    .button:hover, .button:active {
+      background-color: #2988e2;
+      text-decoration: none;
+    }
+
+    /*
+    /  Loader
+    /  Adapted from http://tobiasahlin.com/spinkit/
+    */
+
+    .loader {
+      display: inline-block;
+      margin-top: 30%;
+      width: 40px;
+      height: 40px;
+    }
+
+    .loader .loader-cube {
+      float: left;
+      width: 50%;
+      height: 50%;
+      position: relative;
+      -webkit-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+      transform: scale(1.1);
+    }
+
+    .loader .loader-cube:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #3897f0;
+      -webkit-animation: loader-foldCubeAngle 2.4s infinite linear both;
+      animation: loader-foldCubeAngle 2.4s infinite linear both;
+      -webkit-transform-origin: 100% 100%;
+      -ms-transform-origin: 100% 100%;
+      transform-origin: 100% 100%;
+    }
+
+    .loader .loader-cube2 {
+      -webkit-transform: scale(1.1) rotateZ(90deg);
+      transform: scale(1.1) rotateZ(90deg);
+    }
+
+    .loader .loader-cube3 {
+      -webkit-transform: scale(1.1) rotateZ(180deg);
+      transform: scale(1.1) rotateZ(180deg);
+    }
+
+    .loader .loader-cube4 {
+      -webkit-transform: scale(1.1) rotateZ(270deg);
+      transform: scale(1.1) rotateZ(270deg);
+    }
+
+    .loader .loader-cube2:before {
+      -webkit-animation-delay: 0.3s;
+      animation-delay: 0.3s;
+    }
+
+    .loader .loader-cube3:before {
+      -webkit-animation-delay: 0.6s;
+      animation-delay: 0.6s;
+    }
+
+    .loader .loader-cube4:before {
+      -webkit-animation-delay: 0.9s;
+      animation-delay: 0.9s;
+    }
+
+    @-webkit-keyframes loader-foldCubeAngle {
+      0%, 10% {
+        -webkit-transform: perspective(140px) rotateX(-180deg);
+        transform: perspective(140px) rotateX(-180deg);
+        opacity: 0;
+      }
+      25%, 75% {
+        -webkit-transform: perspective(140px) rotateX(0deg);
+        transform: perspective(140px) rotateX(0deg);
+        opacity: 1;
+      }
+      90%, 100% {
+        -webkit-transform: perspective(140px) rotateY(180deg);
+        transform: perspective(140px) rotateY(180deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes loader-foldCubeAngle {
+      0%, 10% {
+        -webkit-transform: perspective(140px) rotateX(-180deg);
+        transform: perspective(140px) rotateX(-180deg);
+        opacity: 0;
+      }
+      25%, 75% {
+        -webkit-transform: perspective(140px) rotateX(0deg);
+        transform: perspective(140px) rotateX(0deg);
+        opacity: 1;
+      }
+      90%, 100% {
+        -webkit-transform: perspective(140px) rotateY(180deg);
+        transform: perspective(140px) rotateY(180deg);
+        opacity: 0;
+      }
+    }
+
+    @media screen and (min-width: 600px) {
+      h1 {
+        font-size: 1.8em;
+      }
+      .button {
+        font-size: 1.8em;
+      }
+    }
+    </style>
   </head>
   <body id="body">
     <header>
