@@ -36,14 +36,20 @@ const renderView = (view, callback) => {
   }
 };
 
-const renderHome = () => document.getElementById("js-login").setAttribute("href", LOGIN_URL);
+const renderHome = () => {
+  const loginBtn = document.getElementById("js-login");
+  loginBtn.setAttribute("href", LOGIN_URL);
+  loginBtn.addEventListener("click", () => renderView("loading"));
+}
 
 const renderPics = () => {
   document.getElementById("js-message").innerHTML = "Hold tight, this could take a minute...";
   fetchMedia(API_ENDPOINT, [])
     .then(response => {
-      renderView("pics");
-      createCollage(response);
+      createCollage(response).then(response => {
+        (["js-download--1", "js-download--2", "js-download--3"]).forEach(id => enableDownloadLink(id, "js-canvas"));
+        renderView("pics");
+      });
     })
     .catch(displayError);
 };
@@ -86,13 +92,16 @@ const getRecent = (endpoint, media) => {
 };
 
 const addMedia = (ctx, url, pos, w) => {
-  const image = new Image();
-  image.crossOrigin = "anonymous";
-  image.onload = () => {
-    const crop = Math.min(image.width, image.height);
-    ctx.drawImage(image, 0, 0, crop, crop, pos[0], pos[1], w, w);
-  };
-  image.src = url;
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.crossOrigin = "anonymous";
+    image.onload = () => {
+      const crop = Math.min(image.width, image.height);
+      ctx.drawImage(image, 0, 0, crop, crop, pos[0], pos[1], w, w);
+      return resolve(image);
+    };
+    image.src = url;
+  })
 };
 
 const getMediaYear = date => new Date(date * 1000).getFullYear();
@@ -105,46 +114,37 @@ const addText = (ctx, text, pos) => {
 };
 
 const createCollage = media => {
-  const canvas = document.getElementById("js-canvas");
-  const context = canvas.getContext("2d");
-  const positions = [[30, 0], [438, 0], [30, 408], [438, 408]];
-  const numLikes = media.reduce((total, item) => (total += item.likes.count), 0);
+  return new Promise((resolve, reject) => {
+    const canvas = document.getElementById("js-canvas");
+    const context = canvas.getContext("2d");
+    const positions = [[30, 0], [438, 0], [30, 408], [438, 408]];
+    const numLikes = media.reduce((total, item) => (total += item.likes.count), 0);
+    const imagePromises = [];
 
-  canvas.width = 868;
-  canvas.height = canvas.width;
-  context.fillStyle = "#ffffff";
-  context.fillRect(0, 0, canvas.width, canvas.height);
+    canvas.width = 868;
+    canvas.height = canvas.width;
+    context.fillStyle = "#ffffff";
+    context.fillRect(0, 0, canvas.width, canvas.height);
 
-  media.forEach((item, i) => {
-    addMedia(context, item.images.standard_resolution.url, positions[i], 400);
-  });
+    media.forEach((item, i) => {
+      imagePromises.push(addMedia(context, item.images.standard_resolution.url, positions[i], 400));
+    });
 
-  addText(context, `My 2017 Top 4 Photos - ${numLikes.toLocaleString()} Likes`, [
-    30,
-    canvas.height - 20
-  ]);
+    addText(context, `My 2017 Top 4 Photos - ${numLikes.toLocaleString()} Likes`, [30, canvas.height - 20]);
+
+    Promise.all(imagePromises).then(responses => {
+      resolve(true)
+    })
+  })
 };
 
-const downloadCanvas = (link, canvasId, filename) => {
+const enableDownloadLink = (id, canvasId) => {
+  const link = document.getElementById(id);
   link.href = document.getElementById(canvasId).toDataURL();
-  link.download = filename;
-};
+  link.download = "My2017Top4.jpg";
+}
 
 const displayError = error => {
   renderView("error", renderError(error));
   console.log(error);
 };
-
-// Event Listeners
-document.getElementById("body").addEventListener("click", event => {
-  switch (event.target.id) {
-    case "js-download--1":
-    case "js-download--2":
-    case "js-download--3":
-      downloadCanvas(event.target, "js-canvas", "MyTop4InstagramPhotosof2017.jpg");
-      break;
-    case "js-login":
-      renderView("loading");
-      break;
-  }
-});
