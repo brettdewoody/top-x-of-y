@@ -29,7 +29,7 @@ Specifically:
 * Development
 * Copy Writing
 
-For more information see the [Contributing guide](https://github.com/brettdewoody/instagram-2017-top-4/blob/master/CONTRIBUTIONS.md).
+For more information see the [Contributing guide](https://github.com/brettdewoody/instagram-2017-top-4/blob/master/CONTRIBUTING.md).
 
 ## Privacy Policy
 
