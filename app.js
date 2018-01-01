@@ -130,7 +130,7 @@ const createCollage = media => {
       imagePromises.push(addMedia(context, item.images.standard_resolution.url, positions[i], 400));
     });
 
-    addText(context, `My 2017 Top 4 Photos - ${numLikes.toLocaleString()} Likes`, [30, canvas.height - 20]);
+    addText(context, `My 2017 Top 4 Posts - ${numLikes.toLocaleString()} Likes`, [30, canvas.height - 20]);
 
     Promise.all(imagePromises).then(responses => {
       resolve(true)
