@@ -31,6 +31,18 @@ Specifically:
 
 For more information see the [Contributing guide](https://github.com/brettdewoody/instagram-2017-top-4/blob/master/CONTRIBUTING.md).
 
+## Local Development
+
+For local development:
+
+1. Fork this repository
+2. Clone the fork to your local machine
+3. `cd` to the repo directory
+4. Start a server on `8088`. On a mac with Python installed this can be done with:
+
+      `python -m SimpleHTTPServer 8088`
+5. Open `localhost:8088` in your browser
+
 ## Privacy Policy
 
 See the [Privacy Policy](https://github.com/brettdewoody/instagram-2017-top-4/blob/master/PRIVACY.md).
