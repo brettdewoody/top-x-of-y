@@ -29,6 +29,7 @@
 
     ol, ul {
       list-style: none;
+      padding: 0;
     }
 
     /*
@@ -134,17 +135,53 @@
     /  Canvas
     */
 
-    .canvas__wrapper {
-      height: 10px;
+    .canvas__container {
+      height: 0px;
       width: 100%;
       position: relative;
-      padding-bottom: 102%;
+      padding-bottom: calc(100% + 44px);
+    }
+
+    .canvas__tabs {
+      display: -webkit-flex;
+      margin: 0 3.5%;
+      display: flex;
+      border-bottom: 4px solid #3897f0;
+    }
+
+    .canvas__tab {
+      -webkit-flex: 1;
+      flex: 1;
+      height: 40px;
+      line-height: 40px;
+      transition: all 0.1s ease-out;
+    }
+
+    .canvas__tab:hover {
+      cursor: pointer;
+      background-color: #3897f0;
+      color: #ffffff;
+    }
+
+    .canvas__tab.active {
+      background-color: #3897f0;
+      color: #ffffff;
+    }
+
+    .canvas__wrapper {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      padding-bottom: 100%;
+      max-width: 600px;
     }
 
     .canvas {
       position: absolute;
-      left: 0;
+      z-index: 0;
       top: 0;
+      left: 0;
       width: 100%;
       max-width: 600px;
       pointer-events: none;
@@ -304,10 +341,21 @@
       </section>
       <section id="pics" class="view" hidden aria-hidden>
         <a id="js-download--1" class="button" href="#">Download Photo</a>
-        <p>Share on Instagram, Twitter and Facebook&nbsp;with<br/><strong>#2017top4</strong></p>
-        <a id="js-download--2" class="canvas__wrapper" href="#">
-          <canvas id="js-canvas" class="canvas"></canvas>
-        </a>
+        <p>Share on Instagram, Twitter and Facebook</p>
+        <div class="canvas__container">
+          <ul class="canvas__tabs">
+            <li class="canvas__tab js-select-pics" id="tab-4" data-pics="4">4</li>
+            <li class="canvas__tab js-select-pics" id="tab-9" data-pics="9">9</li>
+            <li class="canvas__tab js-select-pics" id="tab-16" data-pics="16">16</li>
+            <li class="canvas__tab js-select-pics" id="tab-25" data-pics="25">25</li>
+          </ul>
+          <a id="js-download--2" class="canvas__wrapper" href="#">
+            <canvas id="js-canvas--4" class="canvas" moz-opaque></canvas>
+            <canvas id="js-canvas--9" class="canvas" moz-opaque></canvas>
+            <canvas id="js-canvas--16" class="canvas" moz-opaque></canvas>
+            <canvas id="js-canvas--25" class="canvas" moz-opaque></canvas>
+          </a>
+        </div>
         <a id="js-download--3" class="button" href="#">Download Photo</a>
       </section>
       <section id="error" class="view" hidden aria-hidden>
