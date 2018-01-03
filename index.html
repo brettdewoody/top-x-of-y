@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="The easiest way to create a collage of your most popular Instagram photos." />
     <title>Top X of Y</title>
 
     <meta property="og:title" content="TopXofY.com" />
@@ -186,7 +187,7 @@
       width: 100%;
       max-width: 600px;
       pointer-events: none;
-      image-rendering: crisp-edges;
+      image-rendering: auto;
     }
 
     /*
@@ -330,7 +331,7 @@
     <main class="main">
       <section id="home" class="view" hidden aria-hidden>
         <h1>Create a collage of your most-liked Instagram photos from 2017</h1>
-        <a id="js-login" class="button" href="#">Find my top pics</a>
+        <a id="js-login" class="button" href="#">Find My Top Pics</a>
       </section>
       <section id="loading" class="view" hidden aria-hidden>
         <div id="js-message"></div>
@@ -346,10 +347,10 @@
         <p>to share on Instagram, Twitter and Facebook</p>
         <div class="canvas__container">
           <ul class="canvas__tabs">
-            <li class="canvas__tab" id="tab-4" data-pics="4">4</li>
-            <li class="canvas__tab" id="tab-9" data-pics="9">9</li>
-            <li class="canvas__tab" id="tab-16" data-pics="16">16</li>
-            <li class="canvas__tab" id="tab-25" data-pics="25">25</li>
+            <li class="canvas__tab" id="js-tab--4" data-pics="4">4</li>
+            <li class="canvas__tab" id="js-tab--9" data-pics="9">9</li>
+            <li class="canvas__tab" id="js-tab--16" data-pics="16">16</li>
+            <li class="canvas__tab" id="js-tab--25" data-pics="25">25</li>
           </ul>
           <a id="js-download--2" class="canvas__wrapper" href="#">
             <canvas id="js-canvas--4" class="canvas" moz-opaque></canvas>
