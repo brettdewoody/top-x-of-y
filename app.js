@@ -58,17 +58,7 @@ const renderPics = () => {
         renderView("pics");
       });
 
-      document.getElementById(`tab-${DEFAULT_TAB}`).classList.add("active");
-      const tabs = Array.from(document.querySelectorAll(".js-select-pics"));
-      tabs.forEach(tab => {
-        tab.addEventListener("click", event => {
-          const numPics = tab.dataset.pics;
-          document.querySelector(".canvas__tab.active").classList.remove("active");
-          tab.classList.add("active");
-          floatCanvas(numPics);
-          (["js-download--1", "js-download--2", "js-download--3"]).forEach(id => enableDownloadLink(id, `js-canvas--${numPics}`));
-        })
-      })
+      enableTabs();
     })
     .catch(displayError);
 };
@@ -123,6 +113,20 @@ const floatCanvas = id => {
   document.getElementById(`js-canvas--${id}`).style.zIndex = 10;
 }
 
+const enableTabs = () => {
+  document.getElementById(`tab-${DEFAULT_TAB}`).classList.add("active");
+  const tabs = Array.from(document.querySelectorAll(".js-select-pics"));
+  tabs.forEach(tab => {
+    tab.addEventListener("click", event => {
+      const numPics = tab.dataset.pics;
+      document.querySelector(".canvas__tab.active").classList.remove("active");
+      tab.classList.add("active");
+      floatCanvas(numPics);
+      (["js-download--1", "js-download--2", "js-download--3"]).forEach(id => enableDownloadLink(id, `js-canvas--${numPics}`));
+    })
+  })
+}
+
 const addMedia = (ctx, url, posX, posY, w) => {
   return new Promise((resolve, reject) => {
     const image = new Image();
@@ -138,13 +142,6 @@ const addMedia = (ctx, url, posX, posY, w) => {
 
 const getMediaYear = date => new Date(date * 1000).getFullYear();
 
-const addText = (ctx, text, pos_x, pos_y) => {
-  ctx.textAlign = "left";
-  ctx.font = "36px -apple-system, system-ui, Arial";
-  ctx.fillStyle = "#222222";
-  ctx.fillText(text, pos_x, pos_y);
-};
-
 const createCollage = media => {
   const imagePromises = [];
 
@@ -153,26 +150,23 @@ const createCollage = media => {
     const context = canvas.getContext("2d");
     const numLikes = media.slice(0, canvasSize).reduce((total, item) => (total += item.likes.count), 0);
 
-    canvas.width = 868;
+    canvas.width = 800;
     canvas.height = canvas.width;
     context.fillStyle = "#ffffff";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     const gridNum = Math.sqrt(canvasSize);
     const gutterWidth = 6;
-    const offset = 30;
-    const imageWidth = ((canvas.width - (offset * 2)) - (gutterWidth * (gridNum - 1)) ) / gridNum;
+    const imageWidth = ((canvas.width) - (gutterWidth * (gridNum - 1)) ) / gridNum;
 
     for (let i = 0; i < canvasSize; i++) {
       const item = media[i];
       const col = i % gridNum;
       const row = Math.floor(i / gridNum);
-      const posX = offset + (imageWidth * col) + (gutterWidth * col);
+      const posX =(imageWidth * col) + (gutterWidth * col);
       const posY = (imageWidth * row) + (gutterWidth * row);
       imagePromises.push(addMedia(context, item.images.standard_resolution.url, posX, posY, imageWidth));
     }
-
-    addText(context, `My 2017 Top ${canvasSize} Posts - ${numLikes.toLocaleString()} Likes`, 30, canvas.height - 20);
   });
 
   return new Promise((resolve, reject) => {
