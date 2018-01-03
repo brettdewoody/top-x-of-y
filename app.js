@@ -4,7 +4,7 @@
 const YEAR = 2017;
 const DOMAIN = `${window.location.origin}/`;
 const CANVAS_SIZES = [4, 9, 16, 25];
-const DEFAULT_TAB = 9;
+const DEFAULT_SIZE = 9;
 const HASH = window.location.hash.substr(1).split("=");
 const API_CLIENT_ID = "96553afb3bb9430d91c2d2ee9d8c5c75";
 const API_BASE = "https://api.instagram.com/";
@@ -49,16 +49,16 @@ const renderPics = () => {
   fetchMedia(API_ENDPOINT, [])
     .then(response => {
       createCollage(response).then(response => {
-        floatCanvas(DEFAULT_TAB);
-        CANVAS_SIZES.forEach(canvasSize => {
-          const canvas = document.getElementById(`js-canvas--${canvasSize}`);
-          canvas.dataset["url"] = canvas.toDataURL();
-        });
-        (["js-download--1", "js-download--2", "js-download--3"]).forEach(id => enableDownloadLink(id, `js-canvas--${DEFAULT_TAB}`));
+        const canvasArr = CANVAS_SIZES.map(size => `js-canvas--${size}`);
+        const linkArr = ([1,2,3]).map(size => `js-download--${size}`);
+
+        floatCanvas(canvasArr, `js-canvas--${DEFAULT_SIZE}`);
+        addDataURLs(canvasArr);
+        updateDownloadLinks(linkArr, `js-canvas--${DEFAULT_SIZE}`, `MyTop${DEFAULT_SIZE}of2017`);
         renderView("pics");
       });
 
-      enableTabs();
+      enableTabs("canvas__tab", `tab-${DEFAULT_SIZE}`, "active");
     })
     .catch(displayError);
 };
@@ -100,29 +100,35 @@ const getRecent = (endpoint, media) => {
     .catch(displayError);
 };
 
-const floatCanvas = id => {
-  const canvases = Array.from(document.querySelectorAll(".canvas"));
-  canvases.forEach(canvas => {
-    if (canvas.getAttribute("id") === `js-canvas--${id}`) {
+const addDataURLs = canvasArr => {
+  canvasArr.forEach(canvasId => {
+    const canvas = document.getElementById(canvasId);
+    canvas.dataset["url"] = canvas.toDataURL("image/jpeg", 0.8);
+  });
+}
+
+const floatCanvas = (canvasArr, activeCanvas) => {
+  canvasArr.forEach(canvasId => {
+    const canvas = document.getElementById(canvasId);
+    if (canvas.getAttribute("id") === activeCanvas) {
       canvas.style.zIndex = 10;
     } else {
       canvas.style.zIndex = 0;
     }
   });
-
-  document.getElementById(`js-canvas--${id}`).style.zIndex = 10;
 }
 
-const enableTabs = () => {
-  document.getElementById(`tab-${DEFAULT_TAB}`).classList.add("active");
-  const tabs = Array.from(document.querySelectorAll(".js-select-pics"));
+const enableTabs = (tabClass, defaultTabId, activeClass) => {
+  document.getElementById(defaultTabId).classList.add(activeClass);
+  const tabs = Array.from(document.querySelectorAll(`.${tabClass}`));
   tabs.forEach(tab => {
     tab.addEventListener("click", event => {
       const numPics = tab.dataset.pics;
-      document.querySelector(".canvas__tab.active").classList.remove("active");
-      tab.classList.add("active");
-      floatCanvas(numPics);
-      (["js-download--1", "js-download--2", "js-download--3"]).forEach(id => enableDownloadLink(id, `js-canvas--${numPics}`));
+      const canvasArr = CANVAS_SIZES.map(size => `js-canvas--${size}`);
+      document.querySelector(`.${tabClass}.${activeClass}`).classList.remove(activeClass);
+      tab.classList.add(activeClass);
+      floatCanvas(canvasArr, `js-canvas--${numPics}`);
+      updateDownloadLinks(["js-download--1", "js-download--2", "js-download--3"], `js-canvas--${numPics}`, `MyTop${numPics}of2017`)
     })
   })
 }
@@ -146,7 +152,7 @@ const createCollage = media => {
   const imagePromises = [];
 
   CANVAS_SIZES.forEach(canvasSize => {
-    const canvas = document.getElementById(`js-canvas--${canvasSize}`);
+    let canvas = document.getElementById(`js-canvas--${canvasSize}`);
     const context = canvas.getContext("2d");
     const numLikes = media.slice(0, canvasSize).reduce((total, item) => (total += item.likes.count), 0);
 
@@ -176,10 +182,12 @@ const createCollage = media => {
   })
 };
 
-const enableDownloadLink = (id, canvasId) => {
-  const link = document.getElementById(id);
-  link.href = document.getElementById(canvasId).dataset.url;
-  link.download = "My2017Top4.jpg";
+const updateDownloadLinks = (selectorsArr, canvasId, title) => {
+  selectorsArr.forEach(id => {
+    const link = document.getElementById(id);
+    link.href = document.getElementById(canvasId).dataset.url;
+    link.download = title;
+  });
 }
 
 const displayError = error => {
