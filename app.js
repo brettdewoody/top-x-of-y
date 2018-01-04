@@ -129,7 +129,7 @@ const addMedia = (ctx, url, posX, posY, w) => {
     image.crossOrigin = "anonymous";
     image.onload = () => {
       const crop = Math.min(image.width, image.height);
-      ctx.drawImage(image, 0, 0, crop, crop, posX, posY, w, w);
+      ctx.drawImage(image, image.width / 2 - crop / 2, image.height / 2 - crop / 2, crop, crop, posX, posY, w, w);
       return resolve(image);
     };
     image.src = url;
@@ -144,16 +144,17 @@ const createCollage = (media, canvasSizes) => {
   canvasSizes.forEach(canvasSize => {
     let canvas = document.getElementById(`js-canvas--${canvasSize}`);
     const context = canvas.getContext("2d");
+    const gridNum = Math.sqrt(canvasSize);
+    const gutterWidth = 5;
     const numLikes = media.slice(0, canvasSize).reduce((total, item) => (total += item.likes.count), 0);
+    const imageWidth = Math.floor(800 / gridNum);
+    const canvasWidth = (imageWidth * gridNum) + ((gridNum - 1) * gutterWidth);
 
-    canvas.width = 800;
+    canvas.width = canvasWidth;
     canvas.height = canvas.width;
     context.fillStyle = "#ffffff";
+    context.imageSmoothingEnabled = false;
     context.fillRect(0, 0, canvas.width, canvas.height);
-
-    const gridNum = Math.sqrt(canvasSize);
-    const gutterWidth = 6;
-    const imageWidth = ((canvas.width) - (gutterWidth * (gridNum - 1)) ) / gridNum;
 
     for (let i = 0; i < canvasSize; i++) {
       const item = media[i];
