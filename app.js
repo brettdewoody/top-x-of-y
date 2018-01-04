@@ -16,36 +16,28 @@ const API_ENDPOINT = `${API_BASE}v1/users/self/media/recent/?access_token=${HASH
 window.onload = () => {
   if (HASH[0] === "access_token") {
     history.replaceState("", document.title, DOMAIN);
-    return renderView("loading", renderPics);
+    return renderView("loading", callbackPics);
   }
 
-  return renderView("home", renderHome);
+  return renderView("home", callbackHome);
 };
 
 // The rest of the app
 const renderView = (view, callback) => {
-  const viewEl = document.getElementById(view);
-  Array.from(document.querySelectorAll(".view")).forEach(view => {
-    view.setAttribute("hidden", true);
-    view.setAttribute("aria-hidden", true);
-    view.classList.remove(ACTIVE_CLASS);
-  });
-  viewEl.classList.add(ACTIVE_CLASS);
-  viewEl.removeAttribute("hidden");
-  viewEl.removeAttribute("aria-hidden");
+  showView('view', view);
 
   if (callback) {
     callback();
   }
 };
 
-const renderHome = () => {
+const callbackHome = () => {
   const loginBtn = document.getElementById("js-login");
   loginBtn.setAttribute("href", LOGIN_URL);
   loginBtn.addEventListener("click", () => renderView("loading"));
 }
 
-const renderPics = () => {
+const callbackPics = () => {
   document.getElementById("js-message").innerHTML = "Hold tight, this could take a minute...";
   fetchMedia(API_ENDPOINT, 2017, [])
     .then(response => {
@@ -66,7 +58,7 @@ const renderPics = () => {
     .catch(displayError);
 };
 
-const renderError = error => {
+const callbackError = error => {
   document.getElementById("js-error").innerHTML = error;
 };
 
@@ -188,7 +180,21 @@ const updateDownloadLinks = (selectorsArr, canvasId, title) => {
   });
 }
 
+const showView = (viewClass, activeId) => {
+  Array.from(document.querySelectorAll(`.${viewClass}`)).forEach(view => hideElement(view));
+  showElement(document.getElementById(activeId));
+}
+
+const hideElement = view => {
+  view.setAttribute("hidden", "hidden");
+  view.style.display = "none";
+}
+const showElement = view => {
+  view.removeAttribute("hidden");
+  view.style.display = "inherit";
+}
+
 const displayError = error => {
-  renderView("error", renderError(error));
+  renderView("error", callbackError(error));
   console.log(error);
 };

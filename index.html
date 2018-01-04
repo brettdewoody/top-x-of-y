@@ -120,16 +120,12 @@
     }
 
     .view {
-      display: none;
+      display: -webkit-flex;
+      display: flex;
       align-items: center;
       -webkit-flex-direction: column;
       flex-direction: column;
       min-height: 100%;
-    }
-
-    .view.active {
-      display: -webkit-flex;
-      display: flex;
     }
 
     /*
@@ -329,11 +325,11 @@
       TopXofY.com
     </header>
     <main class="main">
-      <section id="home" class="view" hidden aria-hidden>
+      <section id="home" class="view" hidden>
         <h1>Create a collage of your most-liked Instagram photos from 2017</h1>
         <a id="js-login" class="button" href="#">Find My Top Pics</a>
       </section>
-      <section id="loading" class="view" hidden aria-hidden>
+      <section id="loading" class="view" hidden>
         <div id="js-message"></div>
         <div class="loader">
           <div class="loader-cube1 loader-cube"></div>
@@ -342,7 +338,7 @@
           <div class="loader-cube3 loader-cube"></div>
         </div>
       </section>
-      <section id="pics" class="view" hidden aria-hidden>
+      <section id="pics" class="view" hidden>
         <a id="js-download--1" class="button" href="#">Download Photo</a>
         <p>to share on Instagram, Twitter and Facebook</p>
         <div class="canvas__container">
@@ -361,7 +357,7 @@
         </div>
         <a id="js-download--3" class="button" href="#">Download Photo</a>
       </section>
-      <section id="error" class="view" hidden aria-hidden>
+      <section id="error" class="view" hidden>
         <p>This is embarrassing, we've encountered an error:</p>
         <code id="js-error"></code>
         <p>
