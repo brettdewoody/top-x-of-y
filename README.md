@@ -1,4 +1,4 @@
-# 2017 Top 4
+# TopXofY.com
 
 A simple app to find your 4 most liked photos of 2017 and create a collage.
 
