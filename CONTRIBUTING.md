@@ -7,12 +7,12 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ## Pull Request Process
 
-1. Fork https://github.com/brettdewoody/instagram-2017-top-4.git
+1. Fork https://github.com/brettdewoody/top-x-of-y.git
 2. Clone the forked repository to your local computer
 3. Create a new branch for your changes
 4. Make your changes and commits
 5. Push your branch to your forked repository on github
-6. Create a Pull Request for your branch to https://github.com/brettdewoody/instagram-2017-top-4.git
+6. Create a Pull Request for your branch to https://github.com/brettdewoody/top-x-of-y.git
 
 ## Code of Conduct
 

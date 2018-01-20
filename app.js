@@ -190,6 +190,7 @@ const hideElement = view => {
   view.setAttribute("hidden", "hidden");
   view.style.display = "none";
 }
+
 const showElement = view => {
   view.removeAttribute("hidden");
   view.style.display = "inherit";

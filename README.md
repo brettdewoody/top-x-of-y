@@ -29,7 +29,7 @@ Specifically:
 * Development
 * Copy Writing
 
-For more information see the [Contributing guide](https://github.com/brettdewoody/instagram-2017-top-4/blob/master/CONTRIBUTING.md).
+For more information see the [Contributing guide](https://github.com/brettdewoody/top-x-of-y/blob/master/CONTRIBUTING.md).
 
 ## Local Development
 
@@ -45,7 +45,7 @@ For local development:
 
 ## Privacy Policy
 
-See the [Privacy Policy](https://github.com/brettdewoody/instagram-2017-top-4/blob/master/PRIVACY.md).
+See the [Privacy Policy](https://github.com/brettdewoody/top-x-of-y/blob/master/PRIVACY.md).
 
 
 
