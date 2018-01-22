@@ -1,20 +1,19 @@
 # TopXofY.com
 
-A simple app to find your 4 most liked photos of 2017 and create a collage.
+A simple app to create a collage of your most-liked Instagram photos from 2017.
 
 ## Project Goal
 
 The goal of this project is to create a simple web application, using only modern browser technologies,
-allowing a user to create a collage of their 4 most popular Instagram photos - based on likes, with comments
-as a tie-breaker.
+allowing a user to create a collage of their most-liked Instagram photos (based on likes, with comments
+as a tie-breaker).
 
 In addition to allowing a user to create a collage of a their most-liked photos, the app should
 also serve as an example of what can be built with native, modern, browser technologies.
 
 ## About the app
 
-The app is built using only HTML, CSS and JavaScript. There are no dependencies, third-party libraries, imports
-or other external resources, with the exception of the [Instragram API](https://www.instagram.com/developer/).
+The app is built using only HTML, CSS and JavaScript. There are no dependencies, third-party libraries, imports or other external resources, with the exception of the [Instragram API](https://www.instagram.com/developer/).
 
 The site is hosted on Github Pages.
 
