@@ -1,7 +1,7 @@
 "use strict";
 
 // Global variables
-const YEAR = 2017;
+const YEAR = 2018;
 const DOMAIN = `${window.location.origin}/`;
 const CANVAS_SIZES = [4, 9, 16, 25];
 const DEFAULT_SIZE = 9;
@@ -39,7 +39,7 @@ const callbackHome = () => {
 
 const callbackPics = () => {
   document.getElementById("js-message").innerHTML = "Hold tight, this could take a minute...";
-  fetchMedia(API_ENDPOINT, 2017, [])
+  fetchMedia(API_ENDPOINT, YEAR, [])
     .then(response => {
       const canvasArr = CANVAS_SIZES.map(size => `js-canvas--${size}`);
       const tabArr = CANVAS_SIZES.map(size => `js-tab--${size}`);
@@ -50,7 +50,7 @@ const callbackPics = () => {
         addDataURLs(canvasArr);
         document.getElementById(`js-tab--${DEFAULT_SIZE}`).classList.add(ACTIVE_CLASS);
         enableTabs(tabArr, ACTIVE_CLASS, canvasArr);
-        updateDownloadLinks(linkArr, `js-canvas--${DEFAULT_SIZE}`, `MyTop${DEFAULT_SIZE}of2017`);
+        updateDownloadLinks(linkArr, `js-canvas--${DEFAULT_SIZE}`, `MyTop${DEFAULT_SIZE}of${YEAR}`);
         renderView("pics");
       });
 
@@ -118,7 +118,7 @@ const enableTabs = (tabArr, activeClass, canvasArr) => {
     tab.addEventListener("click", event => {
       updateTabs(tabArr, event.currentTarget.id, activeClass);
       floatCanvas(canvasArr, `js-canvas--${tab.dataset.pics}`);
-      updateDownloadLinks(["js-download--1", "js-download--2", "js-download--3"], `js-canvas--${tab.dataset.pics}`, `MyTop${tab.dataset.pics}of2017`)
+      updateDownloadLinks(["js-download--1", "js-download--2", "js-download--3"], `js-canvas--${tab.dataset.pics}`, `MyTop${tab.dataset.pics}of${YEAR}`)
     })
   })
 }
@@ -153,7 +153,8 @@ const createCollage = (media, canvasSizes) => {
     canvas.width = canvasWidth;
     canvas.height = canvas.width;
     context.fillStyle = "#ffffff";
-    context.imageSmoothingEnabled = false;
+    context.imageSmoothingEnabled = true;
+    context.imageSmoothingQuality = "high";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     for (let i = 0; i < canvasSize; i++) {
