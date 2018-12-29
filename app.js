@@ -50,7 +50,7 @@ const callbackPics = () => {
         addDataURLs(canvasArr);
         document.getElementById(`js-tab--${DEFAULT_SIZE}`).classList.add(ACTIVE_CLASS);
         enableTabs(tabArr, ACTIVE_CLASS, canvasArr);
-        updateDownloadLinks(linkArr, `js-canvas--${DEFAULT_SIZE}`, `MyTop${DEFAULT_SIZE}of${YEAR}.jpg`);
+        updateDownloadLinks(linkArr, `js-canvas--${DEFAULT_SIZE}`, `MyTop${DEFAULT_SIZE}of${YEAR}`);
         renderView("pics");
       });
 
@@ -98,7 +98,7 @@ const getPostsFromYear = (endpoint, year, media) => {
 const addDataURLs = canvasArr => {
   canvasArr.forEach(canvasId => {
     const canvas = document.getElementById(canvasId);
-    canvas.dataset["url"] = canvas.toDataURL("image/jpeg", 0.8);
+    canvas.dataset["url"] = canvas.toDataURL("application/octet-stream", 0.8);
   });
 }
 
