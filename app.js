@@ -50,7 +50,7 @@ const callbackPics = () => {
         addDataURLs(canvasArr);
         document.getElementById(`js-tab--${DEFAULT_SIZE}`).classList.add(ACTIVE_CLASS);
         enableTabs(tabArr, ACTIVE_CLASS, canvasArr);
-        updateDownloadLinks(linkArr, `js-canvas--${DEFAULT_SIZE}`, `MyTop${DEFAULT_SIZE}of${YEAR}`);
+        updateDownloadLinks(linkArr, `js-canvas--${DEFAULT_SIZE}`, `MyTop${DEFAULT_SIZE}of${YEAR}.jpg`);
         renderView("pics");
       });
 
