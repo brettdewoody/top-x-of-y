@@ -146,7 +146,7 @@ const createCollage = (media, canvasSizes) => {
     const gridNum = Math.sqrt(canvasSize);
     const gutterWidth = 5;
     const numLikes = media.slice(0, canvasSize).reduce((total, item) => (total += item.likes.count), 0);
-    const imageWidth = Math.floor(800 / gridNum);
+    const imageWidth = Math.floor(750 / gridNum);
     const canvasWidth = (imageWidth * gridNum) + ((gridNum - 1) * gutterWidth);
 
     canvas.width = canvasWidth;
