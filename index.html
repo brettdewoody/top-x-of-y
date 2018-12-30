@@ -189,6 +189,11 @@
     }
 
     .canvas {
+      display: none;
+      image-rendering: auto;
+    }
+
+    .collage {
       position: absolute;
       z-index: 0;
       top: 0;
@@ -362,10 +367,7 @@
             <li class="canvas__tab" id="js-tab--25" data-pics="25">25</li>
           </ul>
           <a id="js-download--2" class="canvas__wrapper" href="#">
-            <canvas id="js-canvas--4" class="canvas" moz-opaque></canvas>
-            <canvas id="js-canvas--9" class="canvas" moz-opaque></canvas>
-            <canvas id="js-canvas--16" class="canvas" moz-opaque></canvas>
-            <canvas id="js-canvas--25" class="canvas" moz-opaque></canvas>
+            <img id="js-collage" class="collage" src="">
           </a>
         </div>
         <a id="js-download--3" class="button" href="#">Download Photo</a>
@@ -382,6 +384,10 @@
     <footer>
       <a href="https://github.com/brettdewoody/top-x-of-y">Contribute on Github</a>
     </footer>
-  <script type="text/javascript" src="app.js"></script>
+    <canvas id="js-canvas--4" class="canvas" moz-opaque></canvas>
+    <canvas id="js-canvas--9" class="canvas" moz-opaque></canvas>
+    <canvas id="js-canvas--16" class="canvas" moz-opaque></canvas>
+    <canvas id="js-canvas--25" class="canvas" moz-opaque></canvas>
+    <script type="text/javascript" src="app.js"></script>
   </body>
 </html>

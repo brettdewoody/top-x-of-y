@@ -46,11 +46,11 @@ const callbackPics = () => {
       const linkArr = ([1,2,3]).map(size => `js-download--${size}`);
 
       createCollage(response, CANVAS_SIZES).then(response => {
-        floatCanvas(canvasArr, `js-canvas--${DEFAULT_SIZE}`);
         addDataURLs(canvasArr);
+        updateCollageSrc(document.getElementById(`js-canvas--${DEFAULT_SIZE}`).dataset.url);
         document.getElementById(`js-tab--${DEFAULT_SIZE}`).classList.add(ACTIVE_CLASS);
         enableTabs(tabArr, ACTIVE_CLASS, canvasArr);
-        updateDownloadLinks(linkArr, `js-canvas--${DEFAULT_SIZE}`, `MyTop${DEFAULT_SIZE}of${YEAR}`);
+        updateDownloadLinks(linkArr, `js-canvas--${DEFAULT_SIZE}`, DEFAULT_SIZE);
         renderView("pics");
       });
 
@@ -98,13 +98,12 @@ const getPostsFromYear = (endpoint, year, media) => {
 const addDataURLs = canvasArr => {
   canvasArr.forEach(canvasId => {
     const canvas = document.getElementById(canvasId);
-    canvas.dataset["url"] = canvas.toDataURL("application/octet-stream", 0.8);
+    canvas.dataset["url"] = canvas.toDataURL("image/jpeg", 0.8);
   });
 }
 
-const floatCanvas = (canvasArr, activeCanvasId) => {
-  canvasArr.forEach(canvasId => document.getElementById(canvasId).style.zIndex = 0);
-  document.getElementById(activeCanvasId).style.zIndex = 10;
+const updateCollageSrc = src => {
+  document.getElementById('js-collage').src = src;
 }
 
 const updateTabs = (tabArr, activeId, activeClass) => {
@@ -117,8 +116,8 @@ const enableTabs = (tabArr, activeClass, canvasArr) => {
     const tab = document.getElementById(tabId);
     tab.addEventListener("click", event => {
       updateTabs(tabArr, event.currentTarget.id, activeClass);
-      floatCanvas(canvasArr, `js-canvas--${tab.dataset.pics}`);
-      updateDownloadLinks(["js-download--1", "js-download--2", "js-download--3"], `js-canvas--${tab.dataset.pics}`, `MyTop${tab.dataset.pics}of${YEAR}`)
+      updateCollageSrc(document.getElementById(`js-canvas--${tab.dataset.pics}`).dataset.url);
+      updateDownloadLinks(["js-download--1", "js-download--2", "js-download--3"], `js-canvas--${tab.dataset.pics}`, tab.dataset.pics)
     })
   })
 }
@@ -174,11 +173,11 @@ const createCollage = (media, canvasSizes) => {
   })
 };
 
-const updateDownloadLinks = (selectorsArr, canvasId, title) => {
+const updateDownloadLinks = (selectorsArr, canvasId, num) => {
   selectorsArr.forEach(id => {
     const link = document.getElementById(id);
     link.href = document.getElementById(canvasId).dataset.url;
-    link.download = title;
+    link.download = `MyTop${num}of${YEAR}.jpg`;
   });
 }
 
