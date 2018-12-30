@@ -13,6 +13,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="The easiest way to create a collage of your most popular Instagram photos." />
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src *;
+      style-src 'unsafe-inline';
+      font-src * 'self' data:;
+      script-src 'self' www.google-analytics.com;
+      img-src * 'self' www.google-analytics.com data:;"
+    />
     <title>Top X of Y</title>
 
     <meta property="og:title" content="TopXofY.com" />
