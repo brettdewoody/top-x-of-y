@@ -12,7 +12,8 @@
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="The easiest way to create a collage of your most popular Instagram photos." />
+    <meta name="description" content="Instantly create a collage of your best Instagram photos online." />
+    <meta name="keywords" content="instagram 2018 photos collage instant online best top four 4 nine 9 sixteen 16 twentyfive 25" />
     <meta http-equiv="Content-Security-Policy" content="
       default-src *;
       style-src 'unsafe-inline';
@@ -20,10 +21,12 @@
       script-src 'self' www.google-analytics.com;
       img-src * 'self' www.google-analytics.com data:;"
     />
-    <title>Top X of Y</title>
+    <title>Top X of Y | Instantly create a collage of your best Instagram photos online.</title>
 
-    <meta property="og:title" content="TopXofY.com" />
     <meta property="og:type" content="website" />
+    <meta property="og:title" content="TopXofY.com | Instantly create a collage of your best Instagram photos online." />
+    <meta property="og:site_name" content="Top X of Y" />
+    <meta property="og:description" content="Instantly create a collage of your best Instagram photos online." />
     <meta property="og:url" content="https://TopXofY.com" />
 
     <style media="screen">
@@ -119,11 +122,11 @@
 
     footer {
       margin-top: 80px;
-      height: 45px;
+      height: 3em;
       width: 100%;
-      line-height: 45px;
-      background-color: #ffffff;
-      border-top: 1px solid rgba(0, 0, 0, 0.098);
+      line-height: 3em;
+      background-color: #222222;
+      color: #ffffff;
       z-index: 10;
     }
 
@@ -223,8 +226,16 @@
       text-decoration: none;
       margin: 20px;
       background-color: #3897f0;
-      border-radius: 3px;
+      border-radius: 4px;
       transition: background-color 0.1s ease-out;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .button svg {
+      margin: 0 0 0 15px;
+      height: 29px;
+      width: 29px;
     }
 
     .button:hover, .button:active {
@@ -351,8 +362,38 @@
     </header>
     <main class="main">
       <section id="home" class="view">
-        <h1>Create a collage of your most-liked Instagram photos from 2018</h1>
-        <a id="js-login" class="button" href="#">Find My Top Pics</a>
+        <h1>Instantly create a collage of your most-liked Instagram photos from 2018</h1>
+        <a id="js-login" class="button" href="#">
+          Login with Instagram
+          <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+           width="29pt" height="29pt" viewBox="0 0 504.000000 504.000000"
+           preserveAspectRatio="xMidYMid meet">
+            <g transform="translate(0.000000,504.000000) scale(0.100000,-0.100000)"
+            fill="#ffffff" stroke="none">
+            <path d="M1550 5034 c-540 -27 -861 -144 -1130 -414 -236 -235 -358 -522 -402
+            -940 -19 -179 -19 -2141 0 -2320 44 -418 166 -705 402 -940 235 -236 522 -358
+            940 -402 179 -19 2141 -19 2320 0 418 44 705 166 940 402 236 235 358 522 402
+            940 19 179 19 2141 0 2320 -44 418 -166 705 -402 940 -230 231 -513 354 -920
+            401 -74 8 -396 13 -1095 14 -544 1 -1019 0 -1055 -1z m2070 -473 c128 -13 245
+            -36 325 -63 317 -105 518 -339 589 -688 37 -183 41 -309 41 -1290 0 -981 -4
+            -1107 -41 -1290 -81 -396 -328 -643 -724 -724 -183 -37 -309 -41 -1290 -41
+            -981 0 -1107 4 -1290 41 -399 82 -646 330 -724 729 -33 166 -38 296 -43 1100
+            -5 796 3 1203 27 1380 68 491 346 768 840 835 47 7 162 15 255 20 250 12 1907
+            4 2035 -9z"/>
+            <path d="M3750 4153 c-63 -23 -151 -113 -173 -177 -9 -27 -17 -77 -17 -111 0
+            -92 24 -151 89 -216 65 -65 124 -89 216 -89 92 0 151 24 216 89 66 66 89 124
+            89 220 0 169 -135 302 -305 300 -38 0 -90 -8 -115 -16z"/>
+            <path d="M2355 3809 c-305 -41 -562 -173 -775 -395 -239 -249 -354 -540 -354
+            -894 0 -358 116 -648 362 -902 255 -264 560 -392 932 -392 372 0 677 128 932
+            392 246 254 362 544 362 902 0 358 -116 648 -362 902 -191 198 -419 322 -685
+            373 -101 20 -317 27 -412 14z m400 -489 c276 -88 479 -293 567 -570 20 -65 23
+            -95 23 -230 0 -135 -3 -165 -23 -230 -88 -279 -293 -484 -572 -572 -65 -20
+            -95 -23 -230 -23 -135 0 -165 3 -230 23 -279 88 -484 293 -572 572 -20 65 -23
+            95 -23 230 0 135 3 165 23 230 96 303 338 526 643 590 24 5 107 8 184 6 111
+            -3 155 -8 210 -26z"/>
+            </g>
+          </svg>
+        </a>
       </section>
       <section id="loading" class="view" hidden>
         <div id="js-message"></div>
