@@ -1,19 +1,18 @@
 # TopXofY.com
 
-A simple app to create a collage of your most-liked Instagram photos from 2017.
+A simple app to create a collage of your most-liked Instagram photos.
 
 ## Project Goal
 
 The goal of this project is to create a simple web application, using only modern browser technologies,
-allowing a user to create a collage of their most-liked Instagram photos (based on likes, with comments
-as a tie-breaker).
+allowing a user to create a collage of their most-liked Instagram photos.
 
 In addition to allowing a user to create a collage of a their most-liked photos, the app should
 also serve as an example of what can be built with native, modern, browser technologies.
 
 ## About the app
 
-The app is built using only HTML, CSS and JavaScript. There are no dependencies, third-party libraries, imports or other external resources, with the exception of the [Instragram API](https://www.instagram.com/developer/).
+The app is built using only HTML, CSS and JavaScript. There are no dependencies, and no third-party libraries, imports or other external resources are limited to the [Instragram API](https://www.instagram.com/developer/) and a single Google Font.
 
 The site is hosted on Github Pages.
 
@@ -45,7 +44,3 @@ For local development:
 ## Privacy Policy
 
 See the [Privacy Policy](https://github.com/brettdewoody/top-x-of-y/blob/master/PRIVACY.md).
-
-
-
-
