@@ -13,10 +13,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Instantly create a collage of your best Instagram photos online." />
-    <meta name="keywords" content="instagram 2018 photos collage instant online best top four 4 nine 9 sixteen 16 twentyfive 25" />
+    <meta name="keywords" content="instagram 2018 photos collage creator instant online best top four 4 nine 9 sixteen 16 twentyfive 25" />
     <meta http-equiv="Content-Security-Policy" content="
       default-src *;
-      style-src 'unsafe-inline';
+      style-src 'unsafe-inline' fonts.googleapis.com;
       font-src * 'self' data:;
       script-src 'self' www.google-analytics.com;
       img-src * 'self' www.google-analytics.com data:;"
@@ -29,6 +29,7 @@
     <meta property="og:description" content="Instantly create a collage of your best Instagram photos online." />
     <meta property="og:url" content="https://TopXofY.com" />
 
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <style media="screen">
     /* http://meyerweb.com/eric/tools/css/reset/
        v2.0 | 20110126
@@ -91,7 +92,7 @@
 
     a {
       text-decoration: none;
-      color: #3897f0;
+      color: #FF037A;
     }
 
     a:hover {
@@ -115,6 +116,7 @@
       left: 0;
       height: 45px;
       line-height: 45px;
+      font-family: 'Pacifico', cursive;
       background-color: #ffffff;
       border-bottom: 1px solid rgba(0, 0, 0, 0.098);
       z-index: 100;
@@ -367,7 +369,7 @@
   </head>
   <body id="body">
     <header>
-      TopXofY.com
+      Top X of Y
     </header>
     <main class="main">
       <section id="home" class="view">
@@ -416,6 +418,7 @@
       <section id="pics" class="view" hidden>
         <a id="js-download--1" class="button" href="#">Download Photo</a>
         <p>to share on Instagram, Twitter and Facebook</p>
+        <p>Click the tabs to select between your best 4, 9, 16, or 25 pics</p>
         <div class="canvas__container">
           <ul class="canvas__tabs">
             <li class="canvas__tab" id="js-tab--4" data-pics="4">4</li>
@@ -445,6 +448,6 @@
     <canvas id="js-canvas--9" class="canvas" moz-opaque></canvas>
     <canvas id="js-canvas--16" class="canvas" moz-opaque></canvas>
     <canvas id="js-canvas--25" class="canvas" moz-opaque></canvas>
-    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="app.js" async></script>
   </body>
 </html>
