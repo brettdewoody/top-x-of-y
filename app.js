@@ -1,7 +1,7 @@
 "use strict";
 
 // Global variables
-const YEAR = 2018;
+const YEAR = 2019;
 const DOMAIN = `${window.location.origin}/`;
 const CANVAS_SIZES = [4, 9, 16, 25];
 const DEFAULT_SIZE = 9;
