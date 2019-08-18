@@ -65,17 +65,13 @@ const callbackError = error => {
 
 const fetchMedia = (endpoint, year, media) => {
   return new Promise((resolve, reject) => {
-    getPostsFromYear(endpoint, year, media).then(response => {
-      return resolve(response);
-    });
+    getPostsFromYear(endpoint, year, media).then(response => resolve(response));
   });
 };
 
 const getPostsFromYear = (endpoint, year, media) => {
   return fetch(endpoint)
-    .then(response => {
-      return response.json();
-    })
+    .then(response => response.json())
     .then(response => {
       const data = response.data;
       const lastMediaYear = getMediaYear(data[data.length - 1].created_time);
