@@ -4,6 +4,7 @@
 const YEAR = 2019;
 const DOMAIN = `${window.location.origin}/`;
 const CANVAS_SIZES = [4, 9, 16, 25];
+const GUTTER_WIDTH = 2;
 const DEFAULT_SIZE = 9;
 const ACTIVE_CLASS = "active";
 const HASH = window.location.hash.substr(1).split("=");
@@ -141,10 +142,9 @@ const createCollage = (media, canvasSizes) => {
     let canvas = document.getElementById(`js-canvas--${canvasSize}`);
     const context = canvas.getContext("2d");
     const gridNum = Math.sqrt(canvasSize);
-    const gutterWidth = 2;
     const numLikes = media.slice(0, canvasSize).reduce((total, item) => (total += item.likes.count), 0);
     const imageWidth = Math.floor(750 / gridNum);
-    const canvasWidth = (imageWidth * gridNum) + ((gridNum - 1) * gutterWidth);
+    const canvasWidth = (imageWidth * gridNum) + ((gridNum - 1) * GUTTER_WIDTH);
 
     canvas.width = canvasWidth;
     canvas.height = canvas.width;
@@ -157,8 +157,8 @@ const createCollage = (media, canvasSizes) => {
       const item = media[i];
       const col = i % gridNum;
       const row = Math.floor(i / gridNum);
-      const posX =(imageWidth * col) + (gutterWidth * col);
-      const posY = (imageWidth * row) + (gutterWidth * row);
+      const posX =(imageWidth * col) + (GUTTER_WIDTH * col);
+      const posY = (imageWidth * row) + (GUTTER_WIDTH * row);
       imagePromises.push(addMedia(context, item.images.standard_resolution.url, posX, posY, imageWidth));
     }
   });
