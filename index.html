@@ -31,6 +31,10 @@
 
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <style media="screen">
+    body {
+      --primaryColor: #FF037A;
+    }
+
     /* http://meyerweb.com/eric/tools/css/reset/
        v2.0 | 20110126
        License: none (public domain)
@@ -92,7 +96,7 @@
 
     a {
       text-decoration: none;
-      color: #FF037A;
+      color: var(--primaryColor);
     }
 
     a:hover {
@@ -177,7 +181,7 @@
       display: -webkit-flex;
       padding: 0 3.5%;
       display: flex;
-      border-bottom: 4px solid #FF037A;
+      border-bottom: 4px solid var(--primaryColor);
     }
 
     .canvas__tab {
@@ -186,16 +190,17 @@
       height: 40px;
       line-height: 40px;
       transition: all 0.1s ease-out;
+      background-color: rgba(219, 0, 102, 0.15);
     }
 
     .canvas__tab:hover {
       cursor: pointer;
-      background-color: #FF037A;
+      background-color: var(--primaryColor);
       color: #ffffff;
     }
 
     .canvas__tab.active {
-      background-color: #FF037A;
+      background-color: var(--primaryColor);
       color: #ffffff;
     }
 
@@ -235,7 +240,7 @@
       color: #ffffff;
       text-decoration: none;
       margin: 20px;
-      background-color: #FF037A;
+      background-color: var(--primaryColor);
       border-radius: 4px;
       transition: background-color 0.1s ease-out;
       display: inline-flex;
@@ -267,7 +272,7 @@
     .loader {
       width: 50px;
       height: 50px;
-      background-color: #FF037A;
+      background-color: var(--primaryColor);
       border: 1px solid rgb(219, 0, 102);
 
       position: relative;
