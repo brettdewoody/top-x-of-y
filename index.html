@@ -8,306 +8,315 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      gtag('config', 'UA-111998862-1');
+      gtag('config', 'UA-111998862-1', { 'anonymize_ip': true });
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Instantly create a collage of your top Instagram photos online." />
-    <meta name="keywords" content="instagram 2019 photos collage creator instant online best top four 4 nine 9 sixteen 16 twentyfive 25" />
-    <meta http-equiv="Content-Security-Policy" content="
-      default-src *;
-      style-src 'unsafe-inline' fonts.googleapis.com;
-      font-src * 'self' data:;
-      script-src 'self' www.google-analytics.com;
-      img-src * 'self' www.google-analytics.com data:;"
-    />
-    <title>Top X of Y | Instantly create a collage of your top Instagram photos online.</title>
+    <meta name="description" content="Create a grid of your most-liked Instagram photos from 2019 - instantly, securely, and for free" />
+    <meta name="keywords" content="instagram 2019 photos collage creator instant secure online best top four 4 nine 9 sixteen 16 twentyfive 25" />
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'unsafe-inline' fonts.googleapis.com; font-src * 'self' data:; script-src 'self' www.google-analytics.com; img-src * 'self' www.google-analytics.com data:;" />
+    <title>Top X of Y | Create a grid of your most-liked Instagram photos - instantly, securely, and for free</title>
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="TopXofY.com | Instantly create a collage of your top Instagram photos online." />
+    <meta property="og:title" content="TopXofY.com | Create a grid of your most-liked Instagram photos - instantly, securely, and for free" />
     <meta property="og:site_name" content="Top X of Y" />
-    <meta property="og:description" content="Instantly create a collage of your top Instagram photos online." />
+    <meta property="og:description" content="Create a grid of your most-liked Instagram photos - instantly, securely, and for free" />
     <meta property="og:url" content="https://TopXofY.com" />
 
-    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Dosis:500,800&display=swap" rel="stylesheet">
     <style media="screen">
-    body {
-      --primaryColor: #FF037A;
-    }
-
-    /* http://meyerweb.com/eric/tools/css/reset/
-       v2.0 | 20110126
-       License: none (public domain)
-    */
-    html, body, div, h1, p, a, img, ul, li, canvas, footer, header, main, section {
-      margin: 0;
-      padding: 0;
-      border: 0;
-      font-size: 100%;
-      font: inherit;
-      vertical-align: baseline;
-    }
-
-    body {
-      line-height: 1;
-    }
-
-    ol, ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    /*
-    /  Global
-    */
-
-    html {
-      font-size: 16px;
-    }
-
-    html, body {
-      padding: 0;
-      margin: 0;
-      height: 100%;
-      min-height: 100vh;
-    }
-
-    body {
-      font-family: -apple-system, system-ui, Arial;
-      display: -webkit-flex;
-      display: flex;
-      align-items: center;
-      -webkit-flex-direction: column;
-      flex-direction: column;
-      font-size: 16px;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 1.4em;
-      line-height: 1.2em;
-      margin-bottom: 1em;
-      padding: 0 1em;
-    }
-
-    p {
-      padding: 0 1em 1.8em 1em;
-      line-height: 1.4em;
-    }
-
-    a {
-      text-decoration: none;
-      color: var(--primaryColor);
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    code {
-      font-family: monospace;
-      padding-bottom: 1.8em;
-      color: #2c2c2c;
-    }
-
-    /*
-    / Layout
-    */
-
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      left: 0;
-      height: 45px;
-      line-height: 45px;
-      font-family: 'Pacifico', cursive;
-      background-color: #ffffff;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.098);
-      z-index: 100;
-    }
-
-    footer {
-      margin-top: 80px;
-      height: 3em;
-      width: 100%;
-      line-height: 3em;
-      background-color: #312C26;
-      color: #ffffff;
-      z-index: 10;
-    }
-
-    footer a {
-      color: #ffffff;
-    }
-
-    footer a:hover {
-      text-decoration: none;
-    }
-
-    .main {
-      width: 100%;
-      max-width: 600px;
-      margin-top: 70px;
-      -webkit-flex: 1;
-      flex: 1;
-    }
-
-    .view {
-      display: -webkit-flex;
-      display: flex;
-      align-items: center;
-      -webkit-flex-direction: column;
-      flex-direction: column;
-      min-height: 100%;
-    }
-
-    .view[hidden] {
-      display: none;
-    }
-
-    /*
-    /  Canvas
-    */
-
-    .canvas__container {
-      height: 0px;
-      width: 100%;
-      position: relative;
-      padding-bottom: calc(100% + 44px);
-      margin-bottom: 30px;
-    }
-
-    .canvas__tabs {
-      display: -webkit-flex;
-      padding: 0 3.5%;
-      display: flex;
-      border-bottom: 4px solid var(--primaryColor);
-    }
-
-    .canvas__tab {
-      -webkit-flex: 1;
-      flex: 1;
-      height: 40px;
-      line-height: 40px;
-      transition: all 0.1s ease-out;
-      background-color: rgba(219, 0, 102, 0.15);
-    }
-
-    .canvas__tab:hover {
-      cursor: pointer;
-      background-color: var(--primaryColor);
-      color: #ffffff;
-    }
-
-    .canvas__tab.active {
-      background-color: var(--primaryColor);
-      color: #ffffff;
-    }
-
-    .canvas__wrapper {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      padding-bottom: 100%;
-      max-width: 600px;
-    }
-
-    .canvas {
-      display: none;
-      image-rendering: auto;
-    }
-
-    .collage {
-      position: absolute;
-      z-index: 0;
-      top: 0;
-      left: 0;
-      width: 100%;
-      max-width: 600px;
-      pointer-events: none;
-      image-rendering: auto;
-    }
-
-    /*
-    /  Button
-    */
-
-    .button {
-      display: inline-block;
-      padding: 10px 25px;
-      font-size: 1em;
-      color: #ffffff;
-      text-decoration: none;
-      margin: 20px;
-      background-color: var(--primaryColor);
-      border-radius: 4px;
-      transition: background-color 0.1s ease-out;
-      display: inline-flex;
-      align-items: center;
-      transition: background-color 0.1s ease-in-out;
-    }
-
-    .button svg {
-      margin: 0 0 0 15px;
-      height: 29px;
-      width: 29px;
-    }
-
-    .button:hover, .button:active {
-      background-color: #ed0070;
-      text-decoration: none;
-    }
-
-    .loader-stage {
-      position: relative;
-      top: 100px;
-
-      perspective: 100px;
-      transform-style: preserve-3d;
-      display: flex;
-      justify-content: center;
-    }
-
-    .loader {
-      width: 50px;
-      height: 50px;
-      background-color: var(--primaryColor);
-      border: 1px solid rgb(219, 0, 102);
-
-      position: relative;
-
-      backface-visibility: visible;
-
-      animation-name: rotateFlip;
-      animation-duration: 1.4s;
-      animation-iteration-count: infinite;
-      animation-timing-function: linear;
-    }
-
-    @keyframes rotateFlip {
-      0% {
-        transform: rotateY(0deg) rotateX(0deg);
+      body {
+        --primaryColor: #4ECDC4;
+        --primaryColorActive: #2faca3;
+        --primaryColorFaded: #d7ebe9;
+        --maxWidth: 600px;
       }
 
-      55% {
-        transform: rotateY(180deg) rotateX(0deg);
+      /* http://meyerweb.com/eric/tools/css/reset/
+        v2.0 | 20110126
+        License: none (public domain)
+      */
+      html, body, div, h1, p, a, img, ul, li, canvas, footer, header, main, section {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
       }
 
-      100% {
-        transform: rotateY(180deg) rotateX(180deg);
+      body {
+        line-height: 1;
       }
-    }
 
-    @media screen and (min-width: 600px) {
+      ol, ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      /*
+      /  Global
+      */
+
+      html {
+        font-size: 16px;
+      }
+
+      html, body {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        min-height: 100vh;
+      }
+
+      body {
+        font-family: -apple-system, system-ui, Arial;
+        font-size: 1rem;
+        text-align: center;
+      }
+
       h1 {
-        font-size: 1.8em;
+        font-size: 1.4rem;
+        line-height: 1.2em;
+        margin-bottom: 1rem;
+        padding: 0 1rem;
       }
+
+      p {
+        padding: 0 1rem 1.8rem 1rem;
+        line-height: 1.4rem;
+      }
+
+      a {
+        text-decoration: none;
+        color: var(--primaryColor);
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      code {
+        font-family: monospace;
+        padding-bottom: 1.8rem;
+        color: #2c2c2c;
+      }
+
+      /*
+      / Layout
+      */
+
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        left: 0;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-family: 'Dosis', sans-serif;
+        font-weight: 800;
+        font-size: 1.5rem;
+        background-color: #ffffff;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.098);
+        z-index: 100;
+      }
+
+      .main {
+        width: 100%;
+        max-width: 600px;
+        min-height: 100vh;
+        box-sizing: border-box;
+        padding-top: 4.5rem;
+        padding-bottom: 4.5rem;
+        margin: 0 auto;
+      }
+
+      footer {
+        width: 100%;
+        padding: 1rem 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 0.85rem;
+        background-color: #546270;
+        color: #e9e9e9;
+        z-index: 10;
+      }
+
+      footer p {
+        max-width: var(--maxWidth);
+        line-height: 1.2em;
+        padding-bottom: 1rem;
+      }
+
+      footer p:last-child {
+        padding-bottom: 0;
+      }
+
+      footer a:hover {
+        text-decoration: none;
+      }
+
+      .view {
+        display: -webkit-flex;
+        display: flex;
+        align-items: center;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+      }
+
+      .view[hidden] {
+        display: none;
+      }
+
+      /*
+      /  Canvas
+      */
+
+      .canvas__container {
+        height: 0px;
+        width: 100%;
+        position: relative;
+        padding-bottom: calc(100% + 44px);
+        margin-bottom: 30px;
+      }
+
+      .canvas__tabs {
+        display: -webkit-flex;
+        padding: 0 3.5%;
+        display: flex;
+        border-bottom: 4px solid var(--primaryColor);
+      }
+
+      .canvas__tab {
+        -webkit-flex: 1;
+        flex: 1;
+        height: 40px;
+        line-height: 40px;
+        transition: all 0.1s ease-out;
+        background-color: var(--primaryColorFaded);
+      }
+
+      .canvas__tab:hover {
+        cursor: pointer;
+        background-color: var(--primaryColor);
+        color: #ffffff;
+      }
+
+      .canvas__tab.active {
+        background-color: var(--primaryColor);
+        color: #ffffff;
+      }
+
+      .canvas__wrapper {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        padding-bottom: 100%;
+        max-width: var(--maxWidth);
+      }
+
+      .canvas {
+        display: none;
+        image-rendering: auto;
+      }
+
+      .collage {
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        left: 0;
+        width: 100%;
+        max-width: 600px;
+        pointer-events: none;
+        image-rendering: auto;
+      }
+
+      /*
+      /  Button
+      */
+
       .button {
-        font-size: 1.8em;
+        display: inline-block;
+        padding: 10px 25px;
+        font-size: 1em;
+        color: #ffffff;
+        text-decoration: none;
+        margin: 20px;
+        background-color: var(--primaryColor);
+        border-radius: 4px;
+        transition: background-color 0.1s ease-out;
+        display: inline-flex;
+        align-items: center;
+        transition: background-color 0.1s ease-in-out;
       }
-    }
+
+      .button.icon {
+        background-size: 29px;
+        background-repeat: no-repeat;
+        background-position: calc(100% - 25px) center;
+        padding-right: 65px;
+      }
+
+      
+      .button.icon--instagram {      
+        background-image: url("data:image/svg+xml,%3Csvg version='1.0' xmlns='http://www.w3.org/2000/svg' width='29pt' height='29pt' viewBox='0 0 504.000000 504.000000' preserveAspectRatio='xMidYMid meet'%3E%3Cg transform='translate(0.000000,504.000000) scale(0.100000,-0.100000)' fill='%23ffffff' stroke='none'%3E%3Cpath d='M1550 5034 c-540 -27 -861 -144 -1130 -414 -236 -235 -358 -522 -402 -940 -19 -179 -19 -2141 0 -2320 44 -418 166 -705 402 -940 235 -236 522 -358 940 -402 179 -19 2141 -19 2320 0 418 44 705 166 940 402 236 235 358 522 402 940 19 179 19 2141 0 2320 -44 418 -166 705 -402 940 -230 231 -513 354 -920 401 -74 8 -396 13 -1095 14 -544 1 -1019 0 -1055 -1z m2070 -473 c128 -13 245 -36 325 -63 317 -105 518 -339 589 -688 37 -183 41 -309 41 -1290 0 -981 -4 -1107 -41 -1290 -81 -396 -328 -643 -724 -724 -183 -37 -309 -41 -1290 -41 -981 0 -1107 4 -1290 41 -399 82 -646 330 -724 729 -33 166 -38 296 -43 1100 -5 796 3 1203 27 1380 68 491 346 768 840 835 47 7 162 15 255 20 250 12 1907 4 2035 -9z'/%3E%3Cpath d='M3750 4153 c-63 -23 -151 -113 -173 -177 -9 -27 -17 -77 -17 -111 0 -92 24 -151 89 -216 65 -65 124 -89 216 -89 92 0 151 24 216 89 66 66 89 124 89 220 0 169 -135 302 -305 300 -38 0 -90 -8 -115 -16z'/%3E%3Cpath d='M2355 3809 c-305 -41 -562 -173 -775 -395 -239 -249 -354 -540 -354 -894 0 -358 116 -648 362 -902 255 -264 560 -392 932 -392 372 0 677 128 932 392 246 254 362 544 362 902 0 358 -116 648 -362 902 -191 198 -419 322 -685 373 -101 20 -317 27 -412 14z m400 -489 c276 -88 479 -293 567 -570 20 -65 23 -95 23 -230 0 -135 -3 -165 -23 -230 -88 -279 -293 -484 -572 -572 -65 -20 -95 -23 -230 -23 -135 0 -165 3 -230 23 -279 88 -484 293 -572 572 -20 65 -23 95 -23 230 0 135 3 165 23 230 96 303 338 526 643 590 24 5 107 8 184 6 111 -3 155 -8 210 -26z'/%3E%3C/g%3E%3C/svg%3E");
+      }
+
+      .button:hover, .button:active {
+        background-color: var(--primaryColorActive);
+        text-decoration: none;
+      }
+
+      .loader-stage {
+        position: relative;
+        top: 100px;
+
+        perspective: 100px;
+        transform-style: preserve-3d;
+        display: flex;
+        justify-content: center;
+      }
+
+      .loader {
+        width: 50px;
+        height: 50px;
+        background-color: var(--primaryColor);
+        border: 1px solid var(--primaryColorActive);
+
+        position: relative;
+
+        backface-visibility: visible;
+
+        animation-name: rotateFlip;
+        animation-duration: 1.4s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+      }
+
+      @keyframes rotateFlip {
+        0% {
+          transform: rotateY(0deg) rotateX(0deg);
+        }
+
+        55% {
+          transform: rotateY(180deg) rotateX(0deg);
+        }
+
+        100% {
+          transform: rotateY(180deg) rotateX(180deg);
+        }
+      }
+
+      @media screen and (min-width: 600px) {
+        h1 {
+          font-size: 1.8rem;
+        }
+        .button {
+          font-size: 1.8rem;
+        }
+      }
     </style>
   </head>
   <body id="body">
@@ -316,37 +325,15 @@
     </header>
     <main class="main">
       <section id="home" class="view" hidden>
-        <h1>Instantly create a collage of your most-liked Instagram photos from 2019</h1>
-        <a id="js-login" class="button" href="#">
+        <h1>Create a grid of your most-liked Instagram photos from 2019</h1>
+        <ul>
+          <li>Instantly</li>
+          <li>Securely</li>
+          <li>For Free</li>
+        </ul>
+        <a id="js-login" class="button icon icon--instagram" href="#">
           Login with Instagram
-          <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-           width="29pt" height="29pt" viewBox="0 0 504.000000 504.000000"
-           preserveAspectRatio="xMidYMid meet">
-            <g transform="translate(0.000000,504.000000) scale(0.100000,-0.100000)"
-            fill="#ffffff" stroke="none">
-            <path d="M1550 5034 c-540 -27 -861 -144 -1130 -414 -236 -235 -358 -522 -402
-            -940 -19 -179 -19 -2141 0 -2320 44 -418 166 -705 402 -940 235 -236 522 -358
-            940 -402 179 -19 2141 -19 2320 0 418 44 705 166 940 402 236 235 358 522 402
-            940 19 179 19 2141 0 2320 -44 418 -166 705 -402 940 -230 231 -513 354 -920
-            401 -74 8 -396 13 -1095 14 -544 1 -1019 0 -1055 -1z m2070 -473 c128 -13 245
-            -36 325 -63 317 -105 518 -339 589 -688 37 -183 41 -309 41 -1290 0 -981 -4
-            -1107 -41 -1290 -81 -396 -328 -643 -724 -724 -183 -37 -309 -41 -1290 -41
-            -981 0 -1107 4 -1290 41 -399 82 -646 330 -724 729 -33 166 -38 296 -43 1100
-            -5 796 3 1203 27 1380 68 491 346 768 840 835 47 7 162 15 255 20 250 12 1907
-            4 2035 -9z"/>
-            <path d="M3750 4153 c-63 -23 -151 -113 -173 -177 -9 -27 -17 -77 -17 -111 0
-            -92 24 -151 89 -216 65 -65 124 -89 216 -89 92 0 151 24 216 89 66 66 89 124
-            89 220 0 169 -135 302 -305 300 -38 0 -90 -8 -115 -16z"/>
-            <path d="M2355 3809 c-305 -41 -562 -173 -775 -395 -239 -249 -354 -540 -354
-            -894 0 -358 116 -648 362 -902 255 -264 560 -392 932 -392 372 0 677 128 932
-            392 246 254 362 544 362 902 0 358 -116 648 -362 902 -191 198 -419 322 -685
-            373 -101 20 -317 27 -412 14z m400 -489 c276 -88 479 -293 567 -570 20 -65 23
-            -95 23 -230 0 -135 -3 -165 -23 -230 -88 -279 -293 -484 -572 -572 -65 -20
-            -95 -23 -230 -23 -135 0 -165 3 -230 23 -279 88 -484 293 -572 572 -20 65 -23
-            95 -23 230 0 135 3 165 23 230 96 303 338 526 643 590 24 5 107 8 184 6 111
-            -3 155 -8 210 -26z"/>
-            </g>
-          </svg>
+          
         </a>
       </section>
       <section id="loading" class="view" hidden>
@@ -356,8 +343,8 @@
         </div>
       </section>
       <section id="pics" class="view" hidden>
-        <a id="js-download--1" class="button" href="#">Download Photo</a>
-        <p>to share on Instagram, Twitter and Facebook</p>
+        <a class="button js-download" href="#">Download Photo</a>
+        <p>and share on Instagram, Twitter, and Facebook</p>
         <p>Click the tabs to select between your top 4, 9, 16, or 25 pics</p>
         <div class="canvas__container">
           <ul class="canvas__tabs">
@@ -366,23 +353,28 @@
             <li class="canvas__tab" id="js-tab--16" data-pics="16">16</li>
             <li class="canvas__tab" id="js-tab--25" data-pics="25">25</li>
           </ul>
-          <a id="js-download--2" class="canvas__wrapper" href="#">
+          <a class="canvas__wrapper js-download" href="#">
             <img id="js-collage" class="collage" src="">
           </a>
         </div>
-        <a id="js-download--3" class="button" href="#">Download Photo</a>
+        <a class="button js-download" href="#">Download Photo</a>
       </section>
       <section id="error" class="view" hidden>
         <p>This is embarrassing, we've encountered an error:</p>
         <code id="js-error"></code>
-        <p>
-          You can help us out by submitting an issue <a href="https://github.com/brettdewoody/top-x-of-y/issues">on our Github page </a> or creating a Pull Request to address it.
-        </p>
+        <p>You can help us out by submitting an issue <a href="https://github.com/brettdewoody/top-x-of-y/issues">on our Github page </a> or creating a Pull Request to address it.</p>
         <p><a href="/">Return to the homepage</a></p>
       </section>
     </main>
     <footer>
-      <a href="https://github.com/brettdewoody/top-x-of-y">Contribute on Github</a>
+      <p>This site uses the Instagram API but is not affiliated with Instagram. All Instagram&trade; logos and trademarks displayed on this site are the property of Instagram.</p>
+      <h3>Privacy Policy</h3>
+      <p>We take privacy and security extremely seriously. This is our policy as of Dec 27, 2019.</p>
+      <p>To create your photo collage we request the most basic permissions allowed by Instagram - granting us permission to retrieve your Instagram profile info and media. With this basic permission we <strong>cannot</strong> post any photos, videos, stories, or other media, or perform any actions on your behalf (e.g. we cannot follow accounts, 'like' photos, or comment).</p>
+      <p>After creating your collage you may revoke this site's access immediately through your <a href="https://www.instagram.com/accounts/manage_access/?hl=en">Instagram Account page</a>. Revoking access ensures we cannot continue to access your profile info or media, which we do not do regardless.</p>
+      <p>We do not collect, store, or share any of your personal Instagram information. We merely request and display your Instagram photos in a collage to you and only you. We do not save your Instagram username, or your collage.</p>
+      <p>Your collage can be created only by you, and shared only by you. Other users cannot create a collage of your most-liked photos on this site.</p>
+      <p>The full source code of this site is available on <a href="https://github.com/brettdewoody/top-x-of-y">Github</a> and licensed under the <a href="https://github.com/brettdewoody/top-x-of-y/blob/master/LICENSE.md">Mozilla Public License 2.0</a>.</p>
     </footer>
     <canvas id="js-canvas--4" class="canvas" moz-opaque></canvas>
     <canvas id="js-canvas--9" class="canvas" moz-opaque></canvas>

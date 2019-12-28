@@ -1,27 +1,36 @@
-"use strict";
+'use strict';
+
+const SINCE_KEY = 'since'
+const urlParams = new URLSearchParams(window.location.search);
+const sinceParam = urlParams.get(SINCE_KEY);
+if (sinceParam) {
+  sessionStorage.setItem(SINCE_KEY, sinceParam);
+} else {
+  sessionStorage.removeItem(SINCE_KEY);
+}
 
 // Global variables
-const YEAR = 2019;
+const YEAR = sessionStorage.getItem(SINCE_KEY) ? sessionStorage.getItem(SINCE_KEY) : 2019;
 const DOMAIN = `${window.location.origin}/`;
 const CANVAS_SIZES = [4, 9, 16, 25];
 const GUTTER_WIDTH = 2;
 const DEFAULT_SIZE = 9;
-const ACTIVE_CLASS = "active";
-const HASH = window.location.hash.substr(1).split("=");
-const API_CLIENT_ID = "96553afb3bb9430d91c2d2ee9d8c5c75";
-const API_BASE = "https://api.instagram.com/";
+const ACTIVE_CLASS = 'active';
+const HASH = window.location.hash.substr(1).split('=');
+const API_CLIENT_ID = '96553afb3bb9430d91c2d2ee9d8c5c75';
+const API_BASE = 'https://api.instagram.com/';
 const LOGIN_URL = `${API_BASE}oauth/authorize/?client_id=${API_CLIENT_ID}&redirect_uri=${DOMAIN}&response_type=token`;
 const API_ENDPOINT = `${API_BASE}v1/users/self/media/recent/?access_token=${HASH[1]}`;
 
 // Set the initial view and render the app
 window.onload = () => {
-  if (HASH[0] === "access_token") {
-    renderView("loading", callbackPics);
-    history.replaceState("", document.title, DOMAIN);
+  if (HASH[0] === 'access_token') {
+    renderView('loading', callbackPics);
+    history.replaceState('', document.title, DOMAIN);
     return true;
   }
 
-  return renderView("home", callbackHome);
+  return renderView('home', callbackHome);
 };
 
 // The rest of the app
@@ -34,26 +43,25 @@ const renderView = (view, callback) => {
 };
 
 const callbackHome = () => {
-  const loginBtn = document.getElementById("js-login");
-  loginBtn.setAttribute("href", LOGIN_URL);
-  loginBtn.addEventListener("click", () => renderView("loading"));
+  const loginBtn = document.getElementById('js-login');
+  loginBtn.setAttribute('href', LOGIN_URL);
+  loginBtn.addEventListener('click', () => renderView('loading'));
 }
 
 const callbackPics = () => {
-  document.getElementById("js-message").innerHTML = "Hold tight, this could take a minute...";
+  document.getElementById('js-message').innerHTML = 'Hold tight, this could take a minute...';
   fetchMedia(API_ENDPOINT, YEAR, [])
     .then(response => {
       const canvasArr = CANVAS_SIZES.map(size => `js-canvas--${size}`);
       const tabArr = CANVAS_SIZES.map(size => `js-tab--${size}`);
-      const linkArr = ([1,2,3]).map(size => `js-download--${size}`);
 
       createCollage(response, CANVAS_SIZES).then(response => {
         addDataURLs(canvasArr);
         updateCollageSrc(document.getElementById(`js-canvas--${DEFAULT_SIZE}`).dataset.url);
         document.getElementById(`js-tab--${DEFAULT_SIZE}`).classList.add(ACTIVE_CLASS);
         enableTabs(tabArr, ACTIVE_CLASS, canvasArr);
-        updateDownloadLinks(linkArr, `js-canvas--${DEFAULT_SIZE}`, DEFAULT_SIZE);
-        renderView("pics");
+        updateDownloadLinks(`js-canvas--${DEFAULT_SIZE}`, DEFAULT_SIZE);
+        renderView('pics');
       });
 
     })
@@ -61,7 +69,7 @@ const callbackPics = () => {
 };
 
 const callbackError = error => {
-  document.getElementById("js-error").innerHTML = error;
+  document.getElementById('js-error').innerHTML = error;
 };
 
 const fetchMedia = (endpoint, year, media) => {
@@ -96,7 +104,7 @@ const getPostsFromYear = (endpoint, year, media) => {
 const addDataURLs = canvasArr => {
   canvasArr.forEach(canvasId => {
     const canvas = document.getElementById(canvasId);
-    canvas.dataset["url"] = canvas.toDataURL("image/jpeg", 0.8);
+    canvas.dataset['url'] = canvas.toDataURL('image/jpeg', 0.8);
   });
 }
 
@@ -112,10 +120,10 @@ const updateTabs = (tabArr, activeId, activeClass) => {
 const enableTabs = (tabArr, activeClass, canvasArr) => {
   tabArr.forEach(tabId => {
     const tab = document.getElementById(tabId);
-    tab.addEventListener("click", event => {
+    tab.addEventListener('click', event => {
       updateTabs(tabArr, event.currentTarget.id, activeClass);
       updateCollageSrc(document.getElementById(`js-canvas--${tab.dataset.pics}`).dataset.url);
-      updateDownloadLinks(["js-download--1", "js-download--2", "js-download--3"], `js-canvas--${tab.dataset.pics}`, tab.dataset.pics)
+      updateDownloadLinks(`js-canvas--${tab.dataset.pics}`, tab.dataset.pics)
     })
   })
 }
@@ -123,7 +131,7 @@ const enableTabs = (tabArr, activeClass, canvasArr) => {
 const addMedia = (ctx, url, posX, posY, w) => {
   return new Promise((resolve, reject) => {
     const image = new Image();
-    image.crossOrigin = "anonymous";
+    image.crossOrigin = 'anonymous';
     image.onload = () => {
       const crop = Math.min(image.width, image.height);
       ctx.drawImage(image, image.width / 2 - crop / 2, image.height / 2 - crop / 2, crop, crop, posX, posY, w, w);
@@ -140,7 +148,7 @@ const createCollage = (media, canvasSizes) => {
 
   canvasSizes.forEach(canvasSize => {
     let canvas = document.getElementById(`js-canvas--${canvasSize}`);
-    const context = canvas.getContext("2d");
+    const context = canvas.getContext('2d');
     const gridNum = Math.sqrt(canvasSize);
     const numLikes = media.slice(0, canvasSize).reduce((total, item) => (total += item.likes.count), 0);
     const imageWidth = Math.floor(750 / gridNum);
@@ -148,9 +156,9 @@ const createCollage = (media, canvasSizes) => {
 
     canvas.width = canvasWidth;
     canvas.height = canvas.width;
-    context.fillStyle = "#ffffff";
+    context.fillStyle = '#ffffff';
     context.imageSmoothingEnabled = true;
-    context.imageSmoothingQuality = "high";
+    context.imageSmoothingQuality = 'high';
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     for (let i = 0; i < canvasSize; i++) {
@@ -170,11 +178,10 @@ const createCollage = (media, canvasSizes) => {
   })
 };
 
-const updateDownloadLinks = (selectorsArr, canvasId, num) => {
-  selectorsArr.forEach(id => {
-    const link = document.getElementById(id);
-    link.href = document.getElementById(canvasId).dataset.url;
-    link.download = `MyTop${num}of${YEAR}.jpg`;
+const updateDownloadLinks = (canvasId, num) => {
+  Array.from(document.querySelectorAll('.js-download')).forEach(el => {
+    el.href = document.getElementById(canvasId).dataset.url;
+    el.download = `MyTop${num}of${YEAR}.jpg`;
   });
 }
 
@@ -184,16 +191,16 @@ const showView = (viewClass, activeId) => {
 }
 
 const hideElement = view => {
-  view.setAttribute("hidden", "hidden");
-  view.style.display = "none";
+  view.setAttribute('hidden', 'hidden');
+  view.style.display = 'none';
 }
 
 const showElement = view => {
-  view.removeAttribute("hidden");
-  view.style.display = "inherit";
+  view.removeAttribute('hidden');
+  view.style.display = 'inherit';
 }
 
 const displayError = error => {
-  renderView("error", callbackError(error));
+  renderView('error', callbackError(error));
   console.log(error);
 };
