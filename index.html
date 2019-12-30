@@ -252,9 +252,10 @@
       .canvas__container {
         height: 0px;
         margin: 2rem auto;
-        width: var(--canvasWidth);
+        width: 100%;
+        max-width: var(--canvasWidth);
         position: relative;
-        padding-bottom: calc(var(--canvasWidth) + 44px);
+        padding-bottom: calc(100% + 44px);
       }
 
       .canvas__tabs {
