@@ -6,7 +6,7 @@ To create your photo collage we request the most basic permissions allowed by In
 
 After creating your collage you may revoke this site's access immediately through your [Instagram Account page](https://www.instagram.com/accounts/manage_access/?hl=en). Revoking access ensures we cannot continue to access your profile info or media, which we do not do regardless.
 
-We do not collect, store, or share any of your personal Instagram information. We merely request and display your Instagram photos in a collage to you and only you. We do not save your Instagram username or other profile info, or your photo collage.
+We do not collect, store, or share any of your personal Instagram information, or your photo collage. We merely request and display your Instagram photos in a collage to you and only you.
 
 Your collage can be created only by you, and shared only by you. Other users cannot create a collage of your most-liked photos on this site.
 

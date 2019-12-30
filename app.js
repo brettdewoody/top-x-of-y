@@ -13,7 +13,6 @@ if (sinceParam) {
 const YEAR = sessionStorage.getItem(SINCE_KEY) ? sessionStorage.getItem(SINCE_KEY) : 2019;
 const DOMAIN = `${window.location.origin}/`;
 const CANVAS_SIZES = [4, 9, 16, 25];
-const GUTTER_WIDTH = 2;
 const DEFAULT_SIZE = 9;
 const ACTIVE_CLASS = 'active';
 const HASH = window.location.hash.substr(1).split('=');
@@ -43,42 +42,72 @@ const renderView = (view, callback) => {
 };
 
 const callbackHome = () => {
-  const loginBtn = document.getElementById('js-login');
-  loginBtn.setAttribute('href', LOGIN_URL);
-  loginBtn.addEventListener('click', () => renderView('loading'));
+  Array.from(document.querySelectorAll('.js-login')).forEach((btn) => {
+    btn.setAttribute('href', LOGIN_URL);
+    btn.addEventListener('click', () => renderView('loading'));
+  });
 }
 
 const callbackPics = () => {
   document.getElementById('js-message').innerHTML = 'Hold tight, this could take a minute...';
-  fetchMedia(API_ENDPOINT, YEAR, [])
-    .then(response => {
-      const canvasArr = CANVAS_SIZES.map(size => `js-canvas--${size}`);
-      const tabArr = CANVAS_SIZES.map(size => `js-tab--${size}`);
-
-      createCollage(response, CANVAS_SIZES).then(response => {
-        addDataURLs(canvasArr);
-        updateCollageSrc(document.getElementById(`js-canvas--${DEFAULT_SIZE}`).dataset.url);
-        document.getElementById(`js-tab--${DEFAULT_SIZE}`).classList.add(ACTIVE_CLASS);
-        enableTabs(tabArr, ACTIVE_CLASS, canvasArr);
-        updateDownloadLinks(`js-canvas--${DEFAULT_SIZE}`, DEFAULT_SIZE);
-        renderView('pics');
-      });
-
-    })
+  fetchMedia()
+    .then(createCollages)
+    .then(displayCollages)
     .catch(displayError);
 };
 
-const callbackError = error => {
-  document.getElementById('js-error').innerHTML = error;
-};
-
-const fetchMedia = (endpoint, year, media) => {
+const fetchMedia = () => {
   return new Promise((resolve, reject) => {
-    getPostsFromYear(endpoint, year, media).then(response => resolve(response));
+    getPostsFromYear(API_ENDPOINT, YEAR).then(response => resolve(response));
   });
 };
 
-const getPostsFromYear = (endpoint, year, media) => {
+const createCollages = (media) => {
+  const imagePromises = [];
+
+  CANVAS_SIZES.forEach(canvasSize => {
+    const gutterWidth = 2;
+    let canvas = document.getElementById(`js-canvas--${canvasSize}`);
+    const context = canvas.getContext('2d');
+    const gridNum = Math.sqrt(canvasSize);
+    const numLikes = media.slice(0, canvasSize).reduce((total, item) => (total += item.likes.count), 0);
+    const imageWidth = Math.floor(750 / gridNum);
+    const canvasWidth = (imageWidth * gridNum) + ((gridNum - 1) * gutterWidth);
+
+    canvas.width = canvasWidth;
+    canvas.height = canvas.width;
+    context.fillStyle = '#ffffff';
+    context.imageSmoothingEnabled = true;
+    context.imageSmoothingQuality = 'high';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < canvasSize; i++) {
+      const item = media[i];
+      const col = i % gridNum;
+      const row = Math.floor(i / gridNum);
+      const posX =(imageWidth * col) + (gutterWidth * col);
+      const posY = (imageWidth * row) + (gutterWidth * row);
+      imagePromises.push(addMedia(context, item.images.standard_resolution.url, posX, posY, imageWidth));
+    }
+  });
+
+  return new Promise((resolve, reject) => {
+    Promise.all(imagePromises).then(responses => {
+      resolve(true)
+    })
+  })
+};
+
+const displayCollages = () => {
+  addDataURLs();
+  updateCollageSrc(document.getElementById(`js-canvas--${DEFAULT_SIZE}`).dataset.url);
+  document.getElementById(`js-tab--${DEFAULT_SIZE}`).classList.add(ACTIVE_CLASS);
+  enableTabs();
+  updateDownloadLinks(DEFAULT_SIZE);
+  renderView('pics');
+}
+
+const getPostsFromYear = (endpoint, year, media = []) => {
   return fetch(endpoint)
     .then(response => response.json())
     .then(response => {
@@ -101,30 +130,28 @@ const getPostsFromYear = (endpoint, year, media) => {
     .catch(displayError);
 };
 
-const addDataURLs = canvasArr => {
-  canvasArr.forEach(canvasId => {
-    const canvas = document.getElementById(canvasId);
+const addDataURLs = () => {
+  Array.from(document.querySelectorAll('.js-canvas')).forEach((canvas) => {
     canvas.dataset['url'] = canvas.toDataURL('image/jpeg', 0.8);
   });
 }
 
-const updateCollageSrc = src => {
+const updateCollageSrc = (src) => {
   document.getElementById('js-collage').src = src;
 }
 
-const updateTabs = (tabArr, activeId, activeClass) => {
-  tabArr.forEach(tabId => document.getElementById(tabId).classList.remove(activeClass));
-  document.getElementById(activeId).classList.add(activeClass);
+const updateTabs = (activeId) => {
+  document.querySelector('.js-tab.active').classList.remove(ACTIVE_CLASS);
+  document.getElementById(activeId).classList.add(ACTIVE_CLASS);
 }
 
-const enableTabs = (tabArr, activeClass, canvasArr) => {
-  tabArr.forEach(tabId => {
-    const tab = document.getElementById(tabId);
-    tab.addEventListener('click', event => {
-      updateTabs(tabArr, event.currentTarget.id, activeClass);
-      updateCollageSrc(document.getElementById(`js-canvas--${tab.dataset.pics}`).dataset.url);
-      updateDownloadLinks(`js-canvas--${tab.dataset.pics}`, tab.dataset.pics)
-    })
+const enableTabs = () => {
+  document.querySelector('.js-tabs').addEventListener('click', event => {
+    if (event.target.matches('.js-tab')) {
+      updateTabs(event.target.id);
+      updateCollageSrc(document.getElementById(`js-canvas--${event.target.dataset.pics}`).dataset.url);
+      updateDownloadLinks(event.target.dataset.pics)
+    }
   })
 }
 
@@ -143,44 +170,9 @@ const addMedia = (ctx, url, posX, posY, w) => {
 
 const getMediaYear = date => new Date(date * 1000).getFullYear();
 
-const createCollage = (media, canvasSizes) => {
-  const imagePromises = [];
-
-  canvasSizes.forEach(canvasSize => {
-    let canvas = document.getElementById(`js-canvas--${canvasSize}`);
-    const context = canvas.getContext('2d');
-    const gridNum = Math.sqrt(canvasSize);
-    const numLikes = media.slice(0, canvasSize).reduce((total, item) => (total += item.likes.count), 0);
-    const imageWidth = Math.floor(750 / gridNum);
-    const canvasWidth = (imageWidth * gridNum) + ((gridNum - 1) * GUTTER_WIDTH);
-
-    canvas.width = canvasWidth;
-    canvas.height = canvas.width;
-    context.fillStyle = '#ffffff';
-    context.imageSmoothingEnabled = true;
-    context.imageSmoothingQuality = 'high';
-    context.fillRect(0, 0, canvas.width, canvas.height);
-
-    for (let i = 0; i < canvasSize; i++) {
-      const item = media[i];
-      const col = i % gridNum;
-      const row = Math.floor(i / gridNum);
-      const posX =(imageWidth * col) + (GUTTER_WIDTH * col);
-      const posY = (imageWidth * row) + (GUTTER_WIDTH * row);
-      imagePromises.push(addMedia(context, item.images.standard_resolution.url, posX, posY, imageWidth));
-    }
-  });
-
-  return new Promise((resolve, reject) => {
-    Promise.all(imagePromises).then(responses => {
-      resolve(true)
-    })
-  })
-};
-
-const updateDownloadLinks = (canvasId, num) => {
+const updateDownloadLinks = (num) => {
   Array.from(document.querySelectorAll('.js-download')).forEach(el => {
-    el.href = document.getElementById(canvasId).dataset.url;
+    el.href = document.getElementById(`js-canvas--${num}`).dataset.url;
     el.download = `MyTop${num}of${YEAR}.jpg`;
   });
 }
@@ -190,17 +182,19 @@ const showView = (viewClass, activeId) => {
   showElement(document.getElementById(activeId));
 }
 
-const hideElement = view => {
+const hideElement = (view) => {
   view.setAttribute('hidden', 'hidden');
   view.style.display = 'none';
 }
 
-const showElement = view => {
+const showElement = (view) => {
   view.removeAttribute('hidden');
   view.style.display = 'inherit';
 }
 
-const displayError = error => {
-  renderView('error', callbackError(error));
-  console.log(error);
+const displayError = (error) => {
+  renderView('error', (error) => {
+    document.getElementById('js-error').innerHTML = error;
+  });
+  console.error(error);
 };
