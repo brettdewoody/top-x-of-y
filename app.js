@@ -104,6 +104,7 @@ const displayCollages = () => {
   document.getElementById(`js-tab--${DEFAULT_SIZE}`).classList.add(ACTIVE_CLASS);
   enableTabs();
   updateDownloadLinks(DEFAULT_SIZE);
+  logoutUser();
   renderView('pics');
 }
 
@@ -129,6 +130,10 @@ const getPostsFromYear = (endpoint, year, media = []) => {
     })
     .catch(displayError);
 };
+
+const logoutUser = () => {
+  document.getElementById('js-logout').src = 'https://www.instagram.com/accounts/logout/';
+}
 
 const addDataURLs = () => {
   Array.from(document.querySelectorAll('.js-canvas')).forEach((canvas) => {

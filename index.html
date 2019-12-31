@@ -66,6 +66,11 @@
       /  Global
       */
 
+      * {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
       html {
         font-size: 16px;
       }
@@ -129,6 +134,10 @@
 
       .p-close {
         padding-bottom: 1rem;
+      }
+
+      .highlight {
+        color: var(--primaryColorActive);
       }
 
       code {
@@ -224,9 +233,32 @@
         display: inline-block;
         will-change: transform;
         animation-name: cycle;
-        animation-duration: 10s;
+        animation-duration: 12s;
         animation-iteration-count: infinite;
       }
+
+      .rotateContainer:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 0.125em;
+        background: linear-gradient(to bottom, rgba(255, 255, 255), rgba(255, 255, 255, 0));
+        z-index: 1;
+      }
+
+      .rotateContainer:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 0.125em;
+        background: linear-gradient(to top, rgba(255, 255, 255), rgba(255, 255, 255, 0));
+        z-index: 1;
+      }
+
       .rotateText > li {
         line-height: 1em;
         margin: 0;
@@ -236,11 +268,12 @@
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
+        position: relative;
         margin: 3rem 1rem;
         padding: 3rem 0 0 0;
         border-top: 1px solid var(--secondaryColorFaded);
         border-bottom: 1px solid var(--secondaryColorFaded);
-      } 
+      }
 
       .list li {
         flex: 1;
@@ -440,11 +473,11 @@
   </head>
   <body id="body">
     <header>
-      <div class="rotateContainer"><span>YOUR TOP</span><ul class="rotateText"><li>4</li><li>9</li><li>16</li><li>25</li></ul><span>of 2019</span></div>
+      <div class="rotateContainer"><span>YOUR TOP</span><ul class="rotateText"><li>4</li><li>9</li><li>16</li><li>25</li></ul><span>of <span class="highlight">2019</span></span></div>
     </header>
     <main class="main">
       <section id="home" class="view" hidden>
-        <h1>The easy, instant, secure, and private way to create a grid of your most popular Instagram photos from 2019</h1>
+        <h1>The easy, fast, private, and secure way to create a grid of your most popular Instagram photos from 2019</h1>
         <div class="center">
           <p class="p-close">Create your grid in seconds by logging in</p class="no-margin">
           <a class="button icon icon--instagram js-login" href="#">
@@ -452,10 +485,10 @@
           </a>
         </div>
         <ul class="list">
-          <li><h5>Easy</h5>It only takes a few clicks</li>
-          <li><h5>Instant</h5>Available to share in seconds</li>
-          <li><h5>Secure</h5>Personal info is never saved or shared</li>
-          <li><h5>Private</h5>Only you can create your grid</li>
+          <li><h5>Easy</h5>No app required, it only takes a few clicks</li>
+          <li><h5>Fast</h5>Your grid is available in seconds</li>
+          <li><h5>Private</h5>Personal info is never saved or shared</li>
+          <li><h5>Secure</h5>Using HTTPS to encrypt data</li>
         </ul>
         <div class="center">
           <a class="button icon icon--instagram js-login" href="#">
@@ -470,9 +503,11 @@
         </div>
       </section>
       <section id="pics" class="view" hidden>
+        <!-- Hit the Instagram logout URL to logout the user -->
+        <img id="js-logout" src="" width="0" height="0" />
         <h1>Your grid is ready!</h1>
         <p>Click the tabs to select between your top 4, 9, 16, or 25 photos</p>
-        <a class="button js-download" href="#">Download Photo</a>
+        <a class="button js-download" href="#">Download Your Grid</a>
         <div class="canvas__container">
           <ul class="canvas__tabs js-tabs">
             <li class="canvas__tab js-tab" id="js-tab--4" data-pics="4">4</li>
@@ -484,7 +519,7 @@
             <img id="js-collage" class="collage" src="">
           </a>
         </div>
-        <a class="button js-download" href="#">Download Photo</a>
+        <a class="button js-download" href="#">Download Your Grid</a>
       </section>
       <section id="error" class="view" hidden>
         <p>This is embarrassing, we've encountered an error:</p>
@@ -496,7 +531,7 @@
     <footer>
       <p>This site uses the Instagram API but is not affiliated with Instagram. All Instagram&trade; logos and trademarks displayed on this site are the property of Instagram.</p>
       <h3>Privacy Policy</h3>
-      <p>We take privacy and security extremely seriously. This is our policy as of Dec 27, 2019.</p>
+      <p>We take privacy and extremely seriously. This is our policy as of Dec 31, 2019.</p>
       <p>To create your photo collage we request the most basic permissions allowed by Instagram - granting us permission to retrieve your Instagram profile info and media. With this basic permission we <strong>cannot</strong> post any photos, videos, stories, or other media, or perform any actions on your behalf (e.g. we cannot follow accounts, 'like' photos, or comment).</p>
       <p>After creating your collage you may revoke this site's access immediately through your <a href="https://www.instagram.com/accounts/manage_access/?hl=en">Instagram Account page</a>. Revoking access ensures we cannot continue to access your profile info or media, which we do not do regardless.</p>
       <p>We do not collect, store, or share any of your personal Instagram information, or your photo collage. We merely request and display your Instagram photos in a collage to you and only you.</p>
