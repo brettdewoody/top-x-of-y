@@ -34,7 +34,8 @@ window.onload = () => {
 
 // The rest of the app
 const renderView = (view, callback) => {
-  showView('view', view);
+  Array.from(document.querySelectorAll('.view')).forEach(el => hideElement(el));
+  showElement(document.getElementById(view));
 
   if (callback) {
     callback();
@@ -110,10 +111,9 @@ const displayCollages = () => {
 const getPostsFromYear = (endpoint, year, media = []) => {
   return fetch(endpoint)
     .then(response => response.json())
-    .then(response => {
-      const data = response.data;
+    .then(({data, pagination}) => {
       const lastMediaYear = getMediaYear(data[data.length - 1].created_time);
-      const moreResults = response.pagination.next_url && lastMediaYear > year - 1;
+      const moreResults = pagination.next_url && lastMediaYear > year - 1;
       const newMedia = data.filter(media => getMediaYear(media.created_time) === year);
 
       const updatedMedia = media
@@ -122,7 +122,7 @@ const getPostsFromYear = (endpoint, year, media = []) => {
         .splice(0, 25);
 
       if (moreResults) {
-        return getPostsFromYear(response.pagination.next_url, year, updatedMedia);
+        return getPostsFromYear(pagination.next_url, year, updatedMedia);
       }
 
       return updatedMedia;
@@ -177,19 +177,12 @@ const updateDownloadLinks = (num) => {
   });
 }
 
-const showView = (viewClass, activeId) => {
-  Array.from(document.querySelectorAll(`.${viewClass}`)).forEach(view => hideElement(view));
-  showElement(document.getElementById(activeId));
-}
-
 const hideElement = (view) => {
   view.setAttribute('hidden', 'hidden');
-  view.style.display = 'none';
 }
 
 const showElement = (view) => {
   view.removeAttribute('hidden');
-  view.style.display = 'inherit';
 }
 
 const displayError = (error) => {
