@@ -132,7 +132,7 @@ const getPostsFromYear = (endpoint, year, media = []) => {
 
 const addDataURLs = () => {
   Array.from(document.querySelectorAll('.js-canvas')).forEach((canvas) => {
-    canvas.dataset['url'] = canvas.toDataURL('image/jpeg', 0.8);
+    canvas.dataset['url'] = canvas.toDataURL('image/jpeg', 0.8).replace('image/jpeg', 'image/octet-stream');
   });
 }
 
