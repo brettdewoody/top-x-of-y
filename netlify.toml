@@ -1,0 +1,8 @@
+[build]
+  base = "/"
+  publish = "/"
+  command = ""
+  functions = "functions/"
+
+  API_APP_ID = "341306183785686"
+  API_BASE = "https://api.instagram.com/"

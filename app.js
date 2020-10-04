@@ -10,21 +10,28 @@ if (sinceParam) {
 }
 
 // Global variables
-const YEAR = sessionStorage.getItem(SINCE_KEY) ? sessionStorage.getItem(SINCE_KEY) : 2019
+const YEAR = sessionStorage.getItem(SINCE_KEY) ? sessionStorage.getItem(SINCE_KEY) : 2020
 const DOMAIN = `${window.location.origin}/`
 const CANVAS_SIZES = [4, 9, 16, 25]
 const DEFAULT_SIZE = 9
 const ACTIVE_CLASS = 'active'
-const HASH = window.location.hash.substr(1).split('=')
-const API_CLIENT_ID = '96553afb3bb9430d91c2d2ee9d8c5c75'
+const PARAMS = new URLSearchParams(window.location.search)
+const API_APP_ID = '341306183785686'
 const API_BASE = 'https://api.instagram.com/'
-const LOGIN_URL = `${API_BASE}oauth/authorize/?client_id=${API_CLIENT_ID}&redirect_uri=${DOMAIN}&response_type=token`
-const API_ENDPOINT = `${API_BASE}v1/users/self/media/recent/?access_token=${HASH[1]}`
+const loginParams = {
+  client_id: API_APP_ID,
+  response_type: 'code',
+  scope: 'user_profile,user_media',
+  redirect_uri: DOMAIN.replace('http', 'https')
+}
+const LOGIN_URL = `${API_BASE}oauth/authorize/?${new URLSearchParams(loginParams)}`
+const TOKEN_URL = `${DOMAIN}.netlify/functions/access_token`
+const API_ENDPOINT = 'https://graph.instagram.com/me/media/?fields=id,media_url,thumbnail_url,like_count,comments_count,timestamp'
 
 // Set the initial view and render the app
 window.onload = () => {
-  if (HASH[0] === 'access_token') {
-    renderView('loading', callbackPics)
+  if (PARAMS.get('code')) {
+    renderView('loading', callbackGetToken)
     history.replaceState('', document.title, DOMAIN)
     return true
   }
@@ -32,7 +39,6 @@ window.onload = () => {
   return renderView('home', callbackHome)
 }
 
-// The rest of the app
 const renderView = (view, callback) => {
   Array.from(document.querySelectorAll('.view')).forEach(el => hideElement(el))
   showElement(document.getElementById(view))
@@ -42,6 +48,14 @@ const renderView = (view, callback) => {
   }
 }
 
+const callbackGetToken = () => {
+  fetch(`${TOKEN_URL}?code=${PARAMS.get('code')}`)
+    .then(response => response.json())
+    .then(({access_token: accessToken}) => {
+      renderView('loading', () => callbackPics(accessToken))
+    })
+}
+
 const callbackHome = () => {
   Array.from(document.querySelectorAll('.js-login')).forEach((btn) => {
     btn.setAttribute('href', LOGIN_URL)
@@ -49,17 +63,17 @@ const callbackHome = () => {
   })
 }
 
-const callbackPics = () => {
+const callbackPics = (accessToken) => {
   document.getElementById('js-message').innerHTML = 'Hold tight, this could take a minute...'
-  fetchMedia()
+  fetchMedia(accessToken)
     .then(createCollages)
     .then(displayCollages)
     .catch(displayError)
 }
 
-const fetchMedia = () => {
+const fetchMedia = (accessToken) => {
   return new Promise((resolve, reject) => {
-    getPostsFromYear(API_ENDPOINT, YEAR).then(response => resolve(response))
+    getPostsFromYear(`${API_ENDPOINT}&access_token=${accessToken}`, YEAR).then(response => resolve(response))
   })
 }
 
@@ -71,7 +85,7 @@ const createCollages = (media) => {
     let canvas = document.getElementById(`js-canvas--${canvasSize}`)
     const context = canvas.getContext('2d')
     const gridNum = Math.sqrt(canvasSize)
-    const numLikes = media.slice(0, canvasSize).reduce((total, item) => (total += item.likes.count), 0)
+    const numLikes = media.slice(0, canvasSize).reduce((total, item) => (total += item.like_count), 0)
     const imageWidth = Math.floor(750 / gridNum)
     const canvasWidth = (imageWidth * gridNum) + ((gridNum - 1) * gutterWidth)
 
@@ -88,7 +102,8 @@ const createCollages = (media) => {
       const row = Math.floor(i / gridNum)
       const posX =(imageWidth * col) + (gutterWidth * col)
       const posY = (imageWidth * row) + (gutterWidth * row)
-      imagePromises.push(addMedia(context, item.images.standard_resolution.url, posX, posY, imageWidth))
+      const url = item.thumbnail_url || item.media_url
+      imagePromises.push(addMedia(context, url, posX, posY, imageWidth))
     }
   })
 
@@ -111,18 +126,16 @@ const displayCollages = () => {
 const getPostsFromYear = (endpoint, year, media = []) => {
   return fetch(endpoint)
     .then(response => response.json())
-    .then(({data, pagination}) => {
-      const lastMediaYear = getMediaYear(data[data.length - 1].created_time)
-      const moreResults = pagination.next_url && lastMediaYear > year - 1
-      const newMedia = data.filter(media => getMediaYear(media.created_time) === year)
-
+    .then(({data, paging}) => {
+      const lastMediaYear = getMediaYear(data[data.length - 1].timestamp)
+      const moreResults = paging.next && lastMediaYear > year - 1
+      const newMedia = data.filter(media => getMediaYear(media.timestamp) === year)
       const updatedMedia = media
         .concat(newMedia)
-        .sort((a, b) => b.likes.count - a.likes.count || b.comments.count - a.comments.count)
+        .sort((a, b) => b.like_count - a.like_count || b.comments_count - a.comments_count)
         .splice(0, 25)
-
       if (moreResults) {
-        return getPostsFromYear(pagination.next_url, year, updatedMedia)
+        return getPostsFromYear(paging.next, year, updatedMedia)
       }
 
       return updatedMedia
@@ -168,7 +181,7 @@ const addMedia = (ctx, url, posX, posY, w) => {
   })
 }
 
-const getMediaYear = date => new Date(date * 1000).getFullYear()
+const getMediaYear = date => new Date(date).getFullYear()
 
 const updateDownloadLinks = (num) => {
   Array.from(document.querySelectorAll('.js-download')).forEach(el => {

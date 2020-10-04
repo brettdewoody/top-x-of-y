@@ -14,9 +14,7 @@ also serve as an example of what can be built with native, modern, browser techn
 
 The app is built using only HTML, CSS and JavaScript. There are no dependencies, and no third-party libraries, imports or other external resources are limited to the [Instragram API](https://www.instagram.com/developer/) and a single Google Font.
 
-The site is hosted on Github Pages.
-
-The site uses [Cloudflare](https://www.cloudflare.com/)'s free HTTPS.
+The site is hosted on Netlify, and uses a single Lambda function for Instagram authentication. 
 
 ## Contributing
 
@@ -36,10 +34,9 @@ For local development:
 1. Fork this repository
 2. Clone the fork to your local machine
 3. `cd` to the repo directory
-4. Start a server on `8088`. On a mac with Python installed this can be done with:
-
-      `python -m SimpleHTTPServer 8088`
-5. Open `localhost:8088` in your browser
+4. Install the Netlify CLI with `npm install netlify-cli -g`
+4. Start the dev server with `netlify dev`
+5. Open `localhost:8888` in your browser
 
 ## Privacy Policy
 
