@@ -18,14 +18,15 @@ const ACTIVE_CLASS = 'active'
 const PARAMS = new URLSearchParams(window.location.search)
 const API_APP_ID = '2169639756532513'
 const API_BASE = 'https://api.instagram.com/'
+const TOKEN_URL = `${DOMAIN}.netlify/functions/auth`
 const loginParams = {
   client_id: API_APP_ID,
   response_type: 'code',
   scope: 'user_profile,user_media',
-  redirect_uri: DOMAIN.replace('http://', 'https://')
+  redirect_uri: TOKEN_URL.replace('http://', 'https://')
 }
 const LOGIN_URL = `${API_BASE}oauth/authorize/?${new URLSearchParams(loginParams)}`
-const TOKEN_URL = `${DOMAIN}.netlify/functions/auth`
+
 const API_ENDPOINT = 'https://graph.instagram.com/me/media/?fields=id,media_url,thumbnail_url,like_count,comments_count,timestamp'
 
 // Set the initial view and render the app

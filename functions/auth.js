@@ -1,50 +1,28 @@
-const querystring = require('querystring')
-const https = require('https')
-
 exports.handler = function(event, context, callback) {
-  const postData = querystring.stringify({
+  const postData = new URLSearchParams({
     client_id: process.env.API_APP_ID,
     client_secret: process.env.API_APP_SECRET,
     code: event.queryStringParameters.code,
     grant_type: 'authorization_code',
-    fields: 'id,media_url',
     redirect_uri: `${process.env.URL.replace('http', 'https')}/`
   })
 
   const options = {
-    host: process.env.API_BASE,
-    port: 443,
-    path: '/oauth/access_token',
     method: 'POST',
-    headers: {
-         'Content-Type': 'application/x-www-form-urlencoded',
-         'Content-Length': postData.length
-       }
+    body: JSON.stringify(postData)
   }
-  
-  var req = https.request(options, (res) => {
-    let data = ''
 
-    res.on('data', (d) => {
-      data += d 
-    })
+  return fetch(`${process.env.API_BASE}/oauth/access_token`, options)
+    .then((response) => {
+      // Do something with response
+      console.log(response)
 
-    res.on('end', () => {
-      callback(null, {
+      return ({
         statusCode: 200,
-        body: data
+        body: JSON.stringify(response)
       })
     })
-
-  })
-  
-  req.on('error', (e) => {
-    console.error(e)
-    callback(null, {
-      statusCode: 500
+    .catch(function (err) {
+      console.log("Unable to fetch -", err);
     })
-  })
-
-  req.write(postData)
-  req.end()
 }
