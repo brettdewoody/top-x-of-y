@@ -71,9 +71,15 @@ const fetchMedia = (accessToken) => {
 }
 
 const createCollages = (media) => {
+  if (media.length === 0) return new Error('No media found for this year')
+  
   const imagePromises = []
 
   CANVAS_SIZES.forEach(canvasSize => {
+    if (media.length < canvasSize) {
+      imagePromises.push(new Promise((resolve) => resolve(true)))
+    }
+    
     const gutterWidth = 2
     let canvas = document.getElementById(`js-canvas--${canvasSize}`)
     const context = canvas.getContext('2d')
@@ -161,7 +167,7 @@ const enableTabs = () => {
 }
 
 const addMedia = (ctx, url, posX, posY, w) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const image = new Image()
     image.crossOrigin = 'anonymous'
     image.onload = () => {
