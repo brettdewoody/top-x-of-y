@@ -268,6 +268,8 @@
 
       .years {
         display: flex;
+        width: 100%;
+        padding: 2rem 0 0 0;
         justify-content: space-between;
         text-align: center;
       }
@@ -275,11 +277,11 @@
       .years li {
         font-weight: bold;
         color: var(--primaryColor);
-
       }
 
       .years li:hover {
         color: var(--primaryColorActive);
+        font-size: 1.75rem;
       }
 
       .list {
@@ -446,6 +448,7 @@
       }
 
       @media screen and (min-width: 600px) {
+
         .list {
           flex-direction: row;
           flex-wrap: wrap;
@@ -455,9 +458,7 @@
           width: 50%;
           flex: none;
         }
-      }
 
-      @media screen and (min-width: 600px) {
         header {
           font-size: 35px;
         }
@@ -480,6 +481,10 @@
 
         #home {
           text-align: left;
+        }
+
+        .years {
+          padding: 2rem 2rem 0 2rem;
         }
 
         .list {
@@ -508,6 +513,7 @@
             Login with Instagram
           </a>
         </div>
+        <p>Want a different year than <span class="year">2021</span>? Select a year below…</p>
         <ul class="years">
           <li><a href="/?for-2018">2018</a></li>
           <li><a href="/?for-2018">2019</a></li>
