@@ -5,8 +5,6 @@ const urlParams = new URLSearchParams(window.location.search)
 const sinceParam = urlParams.get(FOR_KEY)
 if (sinceParam) {
   sessionStorage.setItem(FOR_KEY, sinceParam)
-} else {
-  sessionStorage.removeItem(FOR_KEY)
 }
 
 // Global variables
@@ -26,8 +24,10 @@ const loginParams = {
   redirect_uri: TOKEN_URL
 }
 const LOGIN_URL = `${API_BASE}oauth/authorize/?${new URLSearchParams(loginParams)}`
-
 const API_ENDPOINT = 'https://graph.instagram.com/me/media/?fields=id,media_url,thumbnail_url,like_count,comments_count,timestamp'
+
+// Set year
+document.getElementById('year').innerText = YEAR
 
 // Set the initial view and render the app
 window.onload = () => {
