@@ -71,7 +71,10 @@ const fetchMedia = (accessToken) => {
 }
 
 const createCollages = (media) => {
-  if (media.length === 0) return new Error('No media found for this year')
+  if (media.length === 0) {
+    displayError('We could not retrieve any media from your account.')
+    return
+  }
   
   const imagePromises = []
   const availableSizes = CANVAS_SIZES.filter(size => size <= media.length)
