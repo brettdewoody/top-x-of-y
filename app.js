@@ -72,14 +72,12 @@ const fetchMedia = (accessToken) => {
 
 const createCollages = (media) => {
   if (media.length === 0) return new Error('No media found for this year')
-  console.log({media})
+  
   const imagePromises = []
+  const availableSizes = CANVAS_SIZES.filter(size => size <= media.length)
+  console.log({availableSizes})
 
-  CANVAS_SIZES.forEach(canvasSize => {
-    if (media.length < canvasSize) {
-      imagePromises.push(new Promise((resolve) => resolve(true)))
-    }
-    
+  availableSizes.forEach(canvasSize => { 
     const gutterWidth = 2
     let canvas = document.getElementById(`js-canvas--${canvasSize}`)
     const context = canvas.getContext('2d')
