@@ -11,6 +11,9 @@ exports.handler = function(event) {
 
   const options = {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
     body: postData
   }
 
