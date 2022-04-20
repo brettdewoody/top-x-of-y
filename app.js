@@ -23,7 +23,7 @@ const loginParams = {
   client_id: API_APP_ID,
   response_type: 'code',
   scope: 'user_profile,user_media',
-  redirect_uri: TOKEN_URL.replace('http://', 'https://')
+  redirect_uri: TOKEN_URL
 }
 const LOGIN_URL = `${API_BASE}oauth/authorize/?${new URLSearchParams(loginParams)}`
 

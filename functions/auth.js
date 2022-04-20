@@ -6,7 +6,7 @@ exports.handler = function(event) {
   postData.append('client_secret', process.env.API_APP_SECRET)
   postData.append('code', event.queryStringParameters.code)
   postData.append('grant_type', 'authorization_code')
-  postData.append('redirect_uri', `${process.env.URL}/`)
+  postData.append('redirect_uri', `${process.env.URL}/.netlify/functions/auth`)
 
   const options = {
     method: 'POST',
