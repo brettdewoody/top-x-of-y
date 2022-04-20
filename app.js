@@ -135,7 +135,7 @@ const getPostsFromYear = (endpoint, year, media = []) => {
 
       return updatedMedia
     })
-    .catch(displayError)
+    .catch(err => displayError('There was a problem retrieving your media. Please ensure you grant permission to access your posts.'))
 }
 
 const addDataURLs = () => {
