@@ -11,7 +11,7 @@ exports.handler = function(event) {
 
   const options = {
     method: 'POST',
-    body: JSON.stringify(postData)
+    body: postData
   }
 
   return fetch(`${process.env.API_BASE}/oauth/access_token`, options)
