@@ -8,7 +8,7 @@ if (sinceParam) {
 }
 
 // Global variables
-const YEAR = sessionStorage.getItem(FOR_KEY) ? sessionStorage.getItem(FOR_KEY) : 2021
+const YEAR = sessionStorage.getItem(FOR_KEY) ? Number(sessionStorage.getItem(FOR_KEY)) : 2021
 const DOMAIN = `${window.location.origin}`
 const CANVAS_SIZES = [4, 9, 16, 25]
 const DEFAULT_SIZE = 9
