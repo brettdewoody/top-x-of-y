@@ -1,24 +1,24 @@
 'use strict'
 
-const SINCE_KEY = 'since'
+const FOR_KEY = 'for'
 const urlParams = new URLSearchParams(window.location.search)
-const sinceParam = urlParams.get(SINCE_KEY)
+const sinceParam = urlParams.get(FOR_KEY)
 if (sinceParam) {
-  sessionStorage.setItem(SINCE_KEY, sinceParam)
+  sessionStorage.setItem(FOR_KEY, sinceParam)
 } else {
-  sessionStorage.removeItem(SINCE_KEY)
+  sessionStorage.removeItem(FOR_KEY)
 }
 
 // Global variables
-const YEAR = sessionStorage.getItem(SINCE_KEY) ? sessionStorage.getItem(SINCE_KEY) : 2020
-const DOMAIN = `${window.location.origin}/`
+const YEAR = sessionStorage.getItem(FOR_KEY) ? sessionStorage.getItem(FOR_KEY) : 2021
+const DOMAIN = `${window.location.origin}`
 const CANVAS_SIZES = [4, 9, 16, 25]
 const DEFAULT_SIZE = 9
 const ACTIVE_CLASS = 'active'
 const PARAMS = new URLSearchParams(window.location.search)
 const API_APP_ID = '2169639756532513'
 const API_BASE = 'https://api.instagram.com/'
-const TOKEN_URL = `${DOMAIN}.netlify/functions/auth`
+const TOKEN_URL = `${DOMAIN}/.netlify/functions/auth`
 const loginParams = {
   client_id: API_APP_ID,
   response_type: 'code',
@@ -31,8 +31,8 @@ const API_ENDPOINT = 'https://graph.instagram.com/me/media/?fields=id,media_url,
 
 // Set the initial view and render the app
 window.onload = () => {
-  if (PARAMS.get('code')) {
-    renderView('loading', callbackGetToken)
+  if (PARAMS.get('token')) {
+    renderView('loading', () => callbackPics(PARAMS.get('token')))
     history.replaceState('', document.title, DOMAIN)
     return true
   }
@@ -47,14 +47,6 @@ const renderView = (view, callback) => {
   if (callback) {
     callback()
   }
-}
-
-const callbackGetToken = () => {
-  fetch(`${TOKEN_URL}?code=${PARAMS.get('code')}`)
-    .then(response => response.json())
-    .then(({access_token: accessToken}) => {
-      renderView('loading', () => callbackPics(accessToken))
-    })
 }
 
 const callbackHome = () => {
@@ -86,7 +78,6 @@ const createCollages = (media) => {
     let canvas = document.getElementById(`js-canvas--${canvasSize}`)
     const context = canvas.getContext('2d')
     const gridNum = Math.sqrt(canvasSize)
-    const numLikes = media.slice(0, canvasSize).reduce((total, item) => (total += item.like_count), 0)
     const imageWidth = Math.floor(750 / gridNum)
     const canvasWidth = (imageWidth * gridNum) + ((gridNum - 1) * gutterWidth)
 
