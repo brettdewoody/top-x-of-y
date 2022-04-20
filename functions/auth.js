@@ -19,13 +19,15 @@ exports.handler = function(event) {
   console.log({options})
 
   return fetch(`${process.env.API_BASE}/oauth/access_token`, options)
-    .then((response) => response.text())
+    .then((response) => response.json())
     .then((result) => {
       console.log(result)
       
       return ({
-        statusCode: 200,
-        body: JSON.stringify(result)
+        statusCode: 302,
+        headers: {
+          Location: `${process.env.URL}/?token=${result.access_token}`
+        }
       })
     })
     .catch(function (err) {
