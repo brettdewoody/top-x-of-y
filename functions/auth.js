@@ -1,13 +1,13 @@
 import fetch from 'node-fetch'
 
 exports.handler = function(event) {
-  const postData = new URLSearchParams({
-    client_id: process.env.API_APP_ID,
-    client_secret: process.env.API_APP_SECRET,
-    code: event.queryStringParameters.code,
-    grant_type: 'authorization_code',
-    redirect_uri: `${process.env.URL.replace('http', 'https')}/`
-  })
+  const postData = new URLSearchParams()
+  postData.append('client_id', process.env.API_APP_ID)
+  postData.append('client_secret', process.env.API_APP_SECRET)
+  postData.append('code', event.queryStringParameters.code)
+  postData.append('grant_type', 'authorization_code')
+  postData.append('redirect_uri', `${process.env.URL.replace('http', 'https')}/`)
+
 
   const options = {
     method: 'POST',
