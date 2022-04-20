@@ -19,8 +19,12 @@ Please note we have a code of conduct, please follow it in all your interactions
 ### Our Goal
 
 The goal of this project is to create a simple web application, using only modern browser technologies,
-allowing a user to create a collage of their 4 most popular Instagram photos - based on likes, with comments
+allowing a user to create a collage of their most popular Instagram photos - based on likes, with comments
 as a tie-breaker.
+
+The original version of the app was entirely client-based, but due to changes in the Instagram API in 2020 the app
+requires a server call to authenticate the user. So this app now includes a simple serverless function call
+to authenticate the user so their media can be retrieved.
 
 Specifically:
 
