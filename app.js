@@ -195,7 +195,7 @@ const showElement = (view) => {
 
 const displayError = (error) => {
   renderView('error', (error) => {
-    document.getElementById('js-error').innerHTML = error
+    document.getElementById('js-error').innerText = error
   })
   console.error(error)
 }
