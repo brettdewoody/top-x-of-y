@@ -6,7 +6,7 @@ exports.handler = function(event) {
   postData.append('client_secret', process.env.API_APP_SECRET)
   postData.append('code', event.queryStringParameters.code)
   postData.append('grant_type', 'authorization_code')
-  postData.append('redirect_uri', `${process.env.URL.replace('http', 'https')}/`)
+  postData.append('redirect_uri', `${process.env.URL}/`)
 
   const options = {
     method: 'POST',
@@ -19,12 +19,13 @@ exports.handler = function(event) {
   console.log({options})
 
   return fetch(`${process.env.API_BASE}/oauth/access_token`, options)
-    .then((response) => {
-      console.log(response)
-
+    .then((response) => response.text())
+    .then((result) => {
+      console.log(result)
+      
       return ({
         statusCode: 200,
-        body: JSON.stringify(response)
+        body: JSON.stringify(result)
       })
     })
     .catch(function (err) {
