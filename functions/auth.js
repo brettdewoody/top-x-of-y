@@ -1,4 +1,4 @@
-exports.handler = function(event, context, callback) {
+exports.handler = function(event) {
   const postData = new URLSearchParams({
     client_id: process.env.API_APP_ID,
     client_secret: process.env.API_APP_SECRET,
@@ -14,7 +14,6 @@ exports.handler = function(event, context, callback) {
 
   return fetch(`${process.env.API_BASE}/oauth/access_token`, options)
     .then((response) => {
-      // Do something with response
       console.log(response)
 
       return ({
