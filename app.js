@@ -27,7 +27,7 @@ const LOGIN_URL = `${API_BASE}oauth/authorize/?${new URLSearchParams(loginParams
 const API_ENDPOINT = 'https://graph.instagram.com/me/media/?fields=id,media_url,thumbnail_url,like_count,comments_count,timestamp'
 
 // Set year
-document.getElementById('year').innerText = YEAR
+document.querySelectorAll('.year').forEach(item => item.innerText = YEAR)
 
 // Set the initial view and render the app
 window.onload = () => {
@@ -75,7 +75,6 @@ const createCollages = (media) => {
   
   const imagePromises = []
   const availableSizes = CANVAS_SIZES.filter(size => size <= media.length)
-  console.log({availableSizes})
 
   availableSizes.forEach(canvasSize => { 
     const gutterWidth = 2
