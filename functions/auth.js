@@ -1,3 +1,5 @@
+import fetch from 'node-fetch'
+
 exports.handler = function(event) {
   const postData = new URLSearchParams({
     client_id: process.env.API_APP_ID,
