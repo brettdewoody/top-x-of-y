@@ -72,7 +72,7 @@ const fetchMedia = (accessToken) => {
 
 const createCollages = (media) => {
   if (media.length === 0) return new Error('No media found for this year')
-  
+  console.log({media})
   const imagePromises = []
 
   CANVAS_SIZES.forEach(canvasSize => {
