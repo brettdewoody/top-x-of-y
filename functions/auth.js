@@ -8,7 +8,6 @@ exports.handler = function(event) {
   postData.append('grant_type', 'authorization_code')
   postData.append('redirect_uri', `${process.env.URL.replace('http', 'https')}/`)
 
-
   const options = {
     method: 'POST',
     headers: {
