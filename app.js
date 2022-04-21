@@ -50,10 +50,7 @@ const renderView = (view, callback) => {
 }
 
 const callbackHome = () => {
-  Array.from(document.querySelectorAll('.js-login')).forEach((btn) => {
-    btn.setAttribute('href', LOGIN_URL)
-    btn.addEventListener('click', () => renderView('loading'))
-  })
+  enableAuthButtons()
 }
 
 const callbackPics = (accessToken) => {
@@ -67,6 +64,13 @@ const callbackPics = (accessToken) => {
 const fetchMedia = (accessToken) => {
   return new Promise((resolve, reject) => {
     getPostsFromYear(`${API_ENDPOINT}&access_token=${accessToken}`, YEAR).then(response => resolve(response))
+  })
+}
+
+const enableAuthButtons = () => {
+  Array.from(document.querySelectorAll('.js-login')).forEach((btn) => {
+    btn.setAttribute('href', LOGIN_URL)
+    btn.addEventListener('click', () => renderView('loading'))
   })
 }
 
@@ -199,6 +203,7 @@ const showElement = (view) => {
 const displayError = (error) => {
   renderView('error', () => {
     document.getElementById('js-error').innerText = error
+    enableAuthButtons()
   })
   throw new Error(error)
 }
