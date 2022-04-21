@@ -200,5 +200,5 @@ const displayError = (error) => {
   renderView('error', () => {
     document.getElementById('js-error').innerText = error
   })
-  console.error(error)
+  throw new Error(error)
 }
