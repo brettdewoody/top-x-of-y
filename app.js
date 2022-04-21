@@ -71,7 +71,7 @@ const fetchMedia = (accessToken) => {
 }
 
 const createCollages = (media) => {
-  if (media.length === 0) {
+  if (!media || media.length === 0) {
     displayError('We could not retrieve any media from your account.')
     return
   }
