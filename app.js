@@ -76,7 +76,7 @@ const enableAuthButtons = () => {
 
 const createCollages = (media) => {
   if (!media || media.length === 0) {
-    displayError('We could not retrieve any media from your account.')
+    displayError('We could not retrieve any media for this year from your account.')
     return
   }
   
